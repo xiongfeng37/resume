@@ -5,314 +5,343 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>熊锋 - 个人简历</title>
 <style>
-  :root {
-    --bg: #0f172a;
-    --card: #1e293b;
-    --border: #334155;
-    --blue: #3b82f6;
-    --cyan: #22d3ee;
-    --text: #e2e8f0;
-    --sub: #94a3b8;
-    --tag-bg: #1e3a5f;
-    --tag-text: #93c5fd;
-    --red: #f87171;
-  }
-  * { margin:0; padding:0; box-sizing:border-box; }
+  * {margin:0;padding:0;box-sizing:border-box;}
   body {
-    font-family: -apple-system, 'Microsoft YaHei', sans-serif;
-    background: var(--bg);
-    color: var(--text);
-    line-height: 1.7;
-    padding: 20px;
+    font-family: -apple-system,'Microsoft YaHei',sans-serif;
+    background:#000;
+    color:#fff;
+    overflow-x:hidden;
+    cursor:none;
   }
-  .container { max-width: 820px; margin:0 auto; }
+  canvas {position:fixed;top:0;left:0;z-index:1;}
 
-  /* Header */
-  .header {
-    text-align: center;
-    padding: 50px 0 30px;
-    position: relative;
+  .cursor {
+    position:fixed;width:20px;height:20px;
+    border:2px solid #22d3ee;border-radius:50%;
+    pointer-events:none;z-index:999;
+    transform:translate(-50%,-50%);
+    transition:width .2s,height .2s,border-color .2s;
   }
-  .header h1 {
-    font-size: 2.2em;
-    font-weight: 800;
-    letter-spacing: 0.05em;
-    background: linear-gradient(135deg, var(--cyan), var(--blue));
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    margin-bottom: 6px;
+  .cursor.dot {
+    position:fixed;width:4px;height:4px;
+    background:#22d3ee;border-radius:50%;
+    pointer-events:none;z-index:999;
+    transform:translate(-50%,-50%);
   }
-  .header .sub {
-    font-size: 1em;
-    color: var(--sub);
-    letter-spacing: 0.1em;
-  }
-  .header::after {
-    content: '';
-    display: block;
-    width: 60px;
-    height: 3px;
-    background: var(--cyan);
-    margin: 16px auto 0;
-    border-radius: 2px;
-  }
+  .cursor.hover {width:40px;height:40px;border-color:#f87171;}
 
-  /* Info bar */
-  .info-bar {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 16px 28px;
-    padding: 18px 24px;
-    background: var(--card);
-    border-radius: 12px;
-    border: 1px solid var(--border);
-    font-size: 0.9em;
-    color: var(--sub);
-    margin-bottom: 28px;
+  .content {position:relative;z-index:10;pointer-events:all;}
+  .section {
+    min-height:100vh;display:flex;align-items:center;justify-content:center;
+    padding:80px 24px;
   }
-  .info-bar span { white-space:nowrap; }
-  .info-bar b { color:var(--text); font-weight:600; }
+  .card {
+    background:rgba(15,23,42,.85);backdrop-filter:blur(20px);
+    border:1px solid rgba(34,211,238,.15);
+    border-radius:20px;padding:48px;max-width:700px;width:100%;
+    box-shadow:0 20px 60px rgba(0,0,0,.5), inset 0 1px 0 rgba(255,255,255,.05);
+    transition:transform .4s,border-color .4s;
+  }
+  .card:hover {border-color:rgba(34,211,238,.4);transform:translateY(-4px);}
 
-  /* Sections */
-  section {
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: 28px 30px;
-    margin-bottom: 20px;
-  }
-  section h2 {
-    font-size: 1.15em;
-    font-weight: 700;
-    color: var(--cyan);
-    margin-bottom: 16px;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-  }
-  section h2::before {
-    content: '';
-    display: inline-block;
-    width: 4px;
-    height: 18px;
-    background: var(--cyan);
-    border-radius: 2px;
+  .hero {text-align:center;}
+  .hero h1 {font-size:3.2em;font-weight:900;letter-spacing:.06em;margin-bottom:8px;
+    background:linear-gradient(135deg,#22d3ee,#3b82f6);-webkit-background-clip:text;
+    -webkit-text-fill-color:transparent;}
+  .hero .sub {font-size:1.15em;color:#94a3b8;letter-spacing:.2em;margin-bottom:24px;}
+  .hero .tags {display:flex;gap:12px;justify-content:center;flex-wrap:wrap;}
+  .hero .tags span {
+    background:rgba(34,211,238,.1);border:1px solid rgba(34,211,238,.2);
+    padding:6px 18px;border-radius:20px;font-size:.85em;color:#67e8f9;
   }
 
-  /* Strengths */
-  .strength-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    gap: 14px;
+  .title {
+    font-size:1.4em;font-weight:800;margin-bottom:24px;padding-bottom:16px;
+    border-bottom:2px solid rgba(34,211,238,.2);
+    display:flex;align-items:center;gap:10px;
   }
-  .strength-card {
-    background: #162032;
-    border: 1px solid var(--border);
-    border-radius: 10px;
-    padding: 18px;
-  }
-  .strength-card .label {
-    font-size: 0.85em;
-    font-weight: 700;
-    color: var(--cyan);
-    margin-bottom: 6px;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-  }
-  .strength-card p { font-size: 0.85em; color: var(--sub); line-height: 1.6; }
+  .title::before {content:'';width:4px;height:22px;background:#22d3ee;border-radius:2px;}
 
-  /* Job */
-  .job {
-    margin-bottom: 20px;
-    padding-bottom: 20px;
-    border-bottom: 1px solid var(--border);
-  }
-  .job:last-child { margin-bottom:0; padding-bottom:0; border-bottom:none; }
-  .job-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: baseline;
-    margin-bottom: 6px;
-    flex-wrap: wrap;
-  }
-  .job-header h3 { font-size: 1em; color: var(--text); font-weight: 700; }
-  .job-header .date { font-size: 0.82em; color: var(--sub); white-space:nowrap; }
-  .job-duty { font-size: 0.88em; color: var(--sub); margin-bottom: 8px; }
-  .job-results { font-size: 0.85em; color: #cbd5e1; }
-  .job-results li { margin-bottom: 3px; list-style: none; }
-  .job-results li::before { content:'\25B8'; color:var(--cyan); margin-right:6px; }
+  .jobs {display:flex;flex-direction:column;gap:28px;}
+  .job {padding-bottom:24px;border-bottom:1px solid rgba(255,255,255,.06);}
+  .job:last-child {border-bottom:none;padding-bottom:0;}
+  .job h3 {font-size:1.05em;color:#e2e8f0;margin-bottom:4px;}
+  .job .date {font-size:.8em;color:#64748b;margin-bottom:8px;}
+  .job p {font-size:.88em;color:#94a3b8;line-height:1.7;}
+  .job .results {margin-top:8px;font-size:.85em;color:#cbd5e1;line-height:1.8;}
+  .job .results span {color:#22d3ee;font-weight:600;}
 
-  /* Skills */
-  .skill-row {
-    display: flex;
-    gap: 12px;
-    margin-bottom: 10px;
-    align-items: flex-start;
-  }
-  .skill-row:last-child { margin-bottom:0; }
-  .skill-tag {
-    background: var(--tag-bg);
-    color: var(--tag-text);
-    padding: 2px 12px;
-    border-radius: 4px;
-    font-size: 0.82em;
-    font-weight: 700;
-    white-space: nowrap;
-    min-width: 80px;
-    text-align: center;
-  }
-  .skill-detail { font-size: 0.85em; color: var(--sub); flex:1; }
+  .skill-grid {display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+  .skill-item {background:rgba(34,211,238,.05);border:1px solid rgba(34,211,238,.1);border-radius:12px;padding:16px;}
+  .skill-item .label {font-size:.78em;color:#22d3ee;font-weight:700;margin-bottom:4px;text-transform:uppercase;letter-spacing:.05em;}
+  .skill-item .val {font-size:.85em;color:#94a3b8;line-height:1.6;}
 
-  /* Eval */
-  .eval-list li {
-    font-size: 0.87em;
-    color: #cbd5e1;
-    margin-bottom: 6px;
-    list-style: none;
-    padding-left: 14px;
-    position: relative;
-  }
-  .eval-list li::before {
-    content: '';
-    position: absolute;
-    left: 0;
-    top: 9px;
-    width: 5px;
-    height: 5px;
-    background: var(--cyan);
-    border-radius: 50%;
-  }
+  .eval-list {display:flex;flex-direction:column;gap:14px;}
+  .eval-item {font-size:.9em;color:#cbd5e1;line-height:1.7;padding-left:16px;border-left:2px solid rgba(34,211,238,.3);}
 
-  .highlight { color: var(--cyan); font-weight: 600; }
-  .red { color: var(--red); }
+  .contact {display:flex;gap:28px;justify-content:center;flex-wrap:wrap;margin-top:20px;}
+  .contact span {color:#94a3b8;font-size:.9em;}
 
-  /* Footer */
-  .footer {
-    text-align: center;
-    padding: 24px;
-    color: var(--sub);
-    font-size: 0.78em;
-  }
+  .footer {text-align:center;padding:40px;color:#475569;font-size:.78em;position:relative;z-index:10;}
 
-  @media (max-width: 600px) {
-    .strength-grid { grid-template-columns: 1fr; }
-    body { padding: 12px; }
-    section { padding: 20px 16px; }
+  @media (max-width:600px) {
+    .card {padding:28px 20px;}
+    .hero h1 {font-size:2em;}
+    .skill-grid {grid-template-columns:1fr;}
+    .cursor,.cursor.dot {display:none;}
+    body {cursor:auto;}
   }
 </style>
 </head>
 <body>
-<div class="container">
+<div class="cursor dot"></div>
+<div class="cursor"></div>
 
-<div class="header">
-  <h1>熊 锋</h1>
-  <div class="sub">TOB 商务运营 · AI 提效实战者</div>
+<div class="content">
+
+<!-- HERO -->
+<div class="section">
+  <div class="card hero">
+    <h1>熊 锋</h1>
+    <div class="sub">TOB 商务运营 · AI 提效实战者</div>
+    <div class="tags">
+      <span>京东政企业务部</span><span>韩语 Topik5</span><span>AI 开发</span><span>成都双流</span>
+    </div>
+    <div class="contact">
+      <span>📧 2118668735@qq.com</span><span>📱 13558727604</span>
+    </div>
+  </div>
 </div>
 
-<div class="info-bar">
-  <span>📍 <b>成都双流</b></span>
-  <span>📧 <b>2118668735@qq.com</b></span>
-  <span>📱 <b>13558727604</b></span>
-  <span>🗣 <b>韩语 Topik5</b></span>
-  <span>💼 <b>京东政企业务部</b></span>
+<!-- 核心优势 -->
+<div class="section">
+  <div class="card">
+    <div class="title">核心优势</div>
+    <div class="skill-grid">
+      <div class="skill-item">
+        <div class="label">TOB 全链路</div>
+        <div class="val">近3年京东商务一线，熟悉引流→电销→商机→运营→下单→开票→回款闭环，精通后端对账催收，对前端亦有完整理解。</div>
+      </div>
+      <div class="skill-item">
+        <div class="label">AI + 业务提效</div>
+        <div class="val">非技术岗中罕见的 AI 实战能力——借助 DeepSeek/OpenCode 独立开发桌面应用，v16 覆盖 50+ 同事（50min→1min）；AI 拼单产品获公司立项并带队参赛。</div>
+      </div>
+      <div class="skill-item">
+        <div class="label">客户导向</div>
+        <div class="val">部队客户高合规场景下 <span style="color:#22d3ee">2年0投诉</span>，逾期率 <span style="color:#f87171">23%→18%</span>，擅长复杂规则下维护客户关系并推进回款。</div>
+      </div>
+      <div class="skill-item">
+        <div class="label">跨行业适应</div>
+        <div class="val">半导体翻译→机械工程→京东商务，学习速度快，临场沟通出色，能快速融入新业务场景。</div>
+      </div>
+    </div>
+  </div>
 </div>
 
-<section>
-  <h2>核心优势</h2>
-  <div class="strength-grid">
-    <div class="strength-card">
-      <div class="label">TOB 全链路</div>
-      <p>近3年京东 TOB 商务一线，熟悉引流→电销→商机→运营→下单→开票→回款闭环，精通后端对账催收，对前端业务亦有完整理解。</p>
+<!-- 工作经历 -->
+<div class="section">
+  <div class="card">
+    <div class="title">工作经历</div>
+    <div class="jobs">
+      <div class="job">
+        <h3>京东集团 · 政企业务部 商务岗（催收/对账）</h3>
+        <div class="date">2023.11 — 至今</div>
+        <p>负责部队客户 TOB 商务后端：开票、催收、对账、回款。虽聚焦后端，对前端引流、电销、商机挖掘等完整链路均有了解。</p>
+        <div class="results">
+          · 某部队项目2年，GMV同比 <span>+15%</span>，逾期率 <span>23%→18%</span>，坏账追回时效缩短 <span>13%</span>，均创历史最优<br>
+          · 高合规场景下连续 <span>2年0投诉</span><br>
+          · 2024年起协同新增项目，年处理案件 <span>200+</span><br>
+          · 2026年3月升职带教，团队效率 <span>+30%</span><br>
+          · 自主开发 v16 商务数据处理工具（Python+customtkinter），<span>50+</span>用户，<span>50min→1min</span>（效率+98%），集团AI大赛演讲<br>
+          · <span>JOY拼拼</span> 获公司立项，任队长统筹PM+前端+后端，参赛集团高级AI大赛（最高奖金10万）
+        </div>
+      </div>
+      <div class="job">
+        <h3>某机械设备公司 · 设备工程师（韩语方向）</h3>
+        <div class="date">2020.03 — 2023.04</div>
+        <p>眉山5000头养殖场项目：独立负责勘测、方案、电路、预算、人员调度，协调韩方工程师按时交付并驻场培训运维。</p>
+      </div>
+      <div class="job">
+        <h3>某半导体公司 · 韩语翻译</h3>
+        <div class="date">2019.06 — 2020.02</div>
+        <p>负责8.0T/8.5T半导体刻蚀与切割工序翻译；支援晶圆抓取、清洗、研磨、IT防火墙搭建等多个工序。</p>
+      </div>
     </div>
-    <div class="strength-card">
-      <div class="label">AI + 业务提效</div>
-      <p>非技术岗中罕见的 AI 实战能力——借助 DeepSeek/OpenCode 独立开发桌面应用，v16 覆盖 50+ 同事（50min→1min）；AI 拼单产品获公司立项并带队参赛。</p>
-    </div>
-    <div class="strength-card">
-      <div class="label">客户导向</div>
-      <p>部队客户高合规场景下 <span class="highlight">2年0投诉</span>，逾期率 <span class="red">23%→18%</span>，擅长复杂规则下维护客户关系并推进回款。</p>
-    </div>
   </div>
-</section>
-
-<section>
-  <h2>工作经历</h2>
-
-  <div class="job">
-    <div class="job-header">
-      <h3>京东集团 · 政企业务部 商务岗（催收 / 对账）</h3>
-      <span class="date">2023.11 — 至今</span>
-    </div>
-    <div class="job-duty">负责部队客户 TOB 商务后端：开票、催收、对账、回款。日常企微 + 外呼，处理大量 Excel 数据。虽聚焦后端，对前端引流、电销、商机挖掘等完整链路均有了解。</div>
-    <ul class="job-results">
-      <li><b>业务结果</b> — 某部队项目 2 年，GMV 同比 <span class="highlight">+15%</span>，逾期率 <span class="red">23%→18%</span>，坏账追回时效缩短 <span class="highlight">13%</span>，均创历史最优</li>
-      <li><b>客户维护</b> — 高合规场景下连续 <span class="highlight">2 年 0 投诉</span></li>
-      <li><b>规模扩展</b> — 2024 年起协同新增项目，年处理案件 <span class="highlight">200+</span></li>
-      <li><b>团队贡献</b> — 2026 年 3 月升职带教，推动流程优化，团队效率 <span class="highlight">+30%</span></li>
-      <li><b>效率创新</b> — 借助 DeepSeek/OpenCode 自主开发 <span class="highlight">v16 商务数据处理工具</span>（Python + customtkinter），50+ 用户，单次加工 50min→1min（效率 <span class="highlight">+98%</span>），被邀请在集团 AI 大赛演讲</li>
-      <li><b>AI 项目</b> — <span class="highlight">JOY拼拼</span> 获公司正式立项，任队长统筹 PM+前端+后端，参赛集团高级 AI 大赛（最高奖金 10 万）</li>
-    </ul>
-  </div>
-
-  <div class="job">
-    <div class="job-header">
-      <h3>某机械设备公司 · 设备工程师（韩语方向）</h3>
-      <span class="date">2020.03 — 2023.04</span>
-    </div>
-    <div class="job-duty">与韩方工程师对接，制定设备方案与技术参数，参与研发、安装调试及售后维护。</div>
-    <ul class="job-results">
-      <li>眉山 5000 头养殖场项目：独立负责勘测、方案、电路、预算、人员调度，协调韩方工程师按时交付并驻场培训运维。</li>
-    </ul>
-  </div>
-
-  <div class="job">
-    <div class="job-header">
-      <h3>某半导体公司 · 韩语翻译</h3>
-      <span class="date">2019.06 — 2020.02</span>
-    </div>
-    <div class="job-duty">半导体行业韩中双向技术翻译，协助韩方工程师精密设备安装调试与产线搭建。</div>
-    <ul class="job-results">
-      <li>负责 8.0T/8.5T 刻蚀与切割工序翻译；支援晶圆抓取、清洗、研磨、IT 防火墙搭建等多个工序。</li>
-    </ul>
-  </div>
-</section>
-
-<section>
-  <h2>专业技能</h2>
-  <div class="skill-row">
-    <span class="skill-tag">业务</span>
-    <span class="skill-detail">TOB 全流程运营（引流→电销→商机→运营→下单→售后→开票→回款）；客户关系维护与逾期管理；GMV 增长驱动</span>
-  </div>
-  <div class="skill-row">
-    <span class="skill-tag">AI 工具</span>
-    <span class="skill-detail">熟练使用 DeepSeek / Grok / OpenCode 等 AI 编程工具；Python + pandas + openpyxl + customtkinter；了解 Ollama 本地部署、Docker、内网穿透、PyInstaller 打包；精通 Excel / Word / PPT</span>
-  </div>
-  <div class="skill-row">
-    <span class="skill-tag">语言</span>
-    <span class="skill-detail">韩语 Topik5（商务沟通级）；英语基础阅读</span>
-  </div>
-  <div class="skill-row">
-    <span class="skill-tag">其他</span>
-    <span class="skill-detail">7 年驾驶经验（15 万 km）；视频剪辑；电焊 / 氩弧焊</span>
-  </div>
-</section>
-
-<section>
-  <h2>自我评价</h2>
-  <ul class="eval-list">
-    <li>近3年京东 TOB 商务一线，从后端对账切入，对前端引流、电销、商机挖掘同样熟悉，有完整业务链条视角。</li>
-    <li><span class="highlight">非技术岗中少有的 AI 实战能力</span>——不等公司给系统，自己发现痛点自己动手解决，已落地 2 个产品（v16 工具 50+ 用户 + JOY拼拼获公司立项），被邀请在集团 AI 大赛演讲。</li>
-    <li>高合规、高要求的部队客户场景下 2 年 0 投诉，逾期率持续下降，抗压能力和客户信任构建能力稳定。</li>
-    <li>执行力强、逻辑清晰，善于在复杂信息中快速定位关键问题并推动闭环。</li>
-    <li>跨行业适应能力强（半导体翻译→机械工程→京东商务），学习速度快，临场沟通出色。</li>
-  </ul>
-</section>
-
-<div class="footer">
-  熊锋 · xiongfeng37 · 感谢阅读
 </div>
 
+<!-- 专业技能 -->
+<div class="section">
+  <div class="card">
+    <div class="title">专业技能</div>
+    <div class="skill-grid">
+      <div class="skill-item"><div class="label">业务</div><div class="val">TOB全流程运营；客户关系维护与逾期管理；GMV增长驱动</div></div>
+      <div class="skill-item"><div class="label">AI 工具</div><div class="val">DeepSeek/Grok/OpenCode；Python+pandas+openpyxl+customtkinter；Ollama/Docker/内网穿透/PyInstaller</div></div>
+      <div class="skill-item"><div class="label">语言</div><div class="val">韩语 Topik5（商务沟通级）；英语基础阅读</div></div>
+      <div class="skill-item"><div class="label">其他</div><div class="val">7年驾驶经验（15万km）；视频剪辑；电焊/氩弧焊</div></div>
+    </div>
+  </div>
 </div>
+
+<!-- 自我评价 -->
+<div class="section">
+  <div class="card">
+    <div class="title">自我评价</div>
+    <div class="eval-list">
+      <div class="eval-item">近3年京东 TOB 商务一线，从后端对账切入，对前端引流、电销、商机挖掘同样熟悉，有完整业务链条视角。</div>
+      <div class="eval-item"><span style="color:#22d3ee;font-weight:600;">非技术岗中少有的 AI 实战能力</span>——不等公司给系统，自己发现痛点自己动手解决，已落地2个产品（v16工具50+用户 + JOY拼拼获公司立项），被邀请在集团AI大赛演讲。</div>
+      <div class="eval-item">高合规、高要求的部队客户场景下2年0投诉，逾期率持续下降，抗压能力和客户信任构建能力稳定。</div>
+      <div class="eval-item">执行力强、逻辑清晰，善于在复杂信息中快速定位关键问题并推动闭环。</div>
+      <div class="eval-item">跨行业适应能力强（半导体翻译→机械工程→京东商务），学习速度快，临场沟通出色。</div>
+    </div>
+  </div>
+</div>
+
+<div class="footer">熊锋 · xiongfeng37 · xiongdafeng.netlify.app</div>
+
+</div>
+
+<script type="importmap">
+{"imports":{"three":"https://unpkg.com/three@0.160.0/build/three.module.js"}}
+</script>
+<script type="module">
+import * as THREE from 'three';
+
+// Cursor
+const cursorDot = document.querySelector('.cursor.dot');
+const cursorRing = document.querySelector('.cursor');
+let mouseX=0,mouseY=0,targetX=0,targetY=0;
+document.addEventListener('mousemove',e=>{targetX=e.clientX;targetY=e.clientY;});
+document.querySelectorAll('.card,.skill-item,.tags span').forEach(el=>{
+  el.addEventListener('mouseenter',()=>cursorRing.classList.add('hover'));
+  el.addEventListener('mouseleave',()=>cursorRing.classList.remove('hover'));
+});
+
+// Three.js scene
+const scene = new THREE.Scene();
+const camera = new THREE.PerspectiveCamera(60,innerWidth/innerHeight,.1,100);
+camera.position.z=8;
+const renderer = new THREE.WebGLRenderer({antialias:true,alpha:true});
+renderer.setSize(innerWidth,innerHeight);
+renderer.setPixelRatio(Math.min(devicePixelRatio,2));
+document.body.prepend(renderer.domElement);
+
+// Stars
+const starsGeo = new THREE.BufferGeometry();
+const stars = 1500;
+const pos = new Float32Array(stars*3);
+const colors = new Float32Array(stars*3);
+for(let i=0;i<stars*3;i+=3){
+  pos[i]=(Math.random()-.5)*30;
+  pos[i+1]=(Math.random()-.5)*20;
+  pos[i+2]=-Math.random()*10;
+  colors[i]=.3+Math.random()*.4;
+  colors[i+1]=.6+Math.random()*.3;
+  colors[i+2]=.8+Math.random()*.2;
+}
+starsGeo.setAttribute('position',new THREE.BufferAttribute(pos,3));
+starsGeo.setAttribute('color',new THREE.BufferAttribute(colors,3));
+const starsMat = new THREE.PointsMaterial({size:.025,vertexColors:true,transparent:true,opacity:.8});
+const starsMesh = new THREE.Points(starsGeo,starsMat);
+scene.add(starsMesh);
+
+// Floating geometric shapes
+const geoGroup = new THREE.Group();
+const shapes = [];
+const geos = [
+  new THREE.IcosahedronGeometry(.3,0),
+  new THREE.OctahedronGeometry(.25,0),
+  new THREE.TorusGeometry(.2,.06,16,32),
+  new THREE.TetrahedronGeometry(.25,0),
+  new THREE.TorusKnotGeometry(.18,.05,64,16),
+  new THREE.IcosahedronGeometry(.2,0),
+  new THREE.OctahedronGeometry(.3,0),
+  new THREE.ConeGeometry(.2,.35,8),
+  new THREE.BoxGeometry(.35,.35,.35),
+  new THREE.DodecahedronGeometry(.22,0),
+];
+for(let i=0;i<10;i++){
+  const mat = new THREE.MeshPhysicalMaterial({
+    color:new THREE.Color().setHSL(.55+i*.03,.8,.5+i*.03),
+    metalness:.1,roughness:.3,transparent:true,opacity:.7,
+    envMapIntensity:.5,clearcoat:.3
+  });
+  const mesh = new THREE.Mesh(geos[i%geos.length],mat);
+  mesh.position.set((Math.random()-.5)*8,(Math.random()-.5)*5,-Math.random()*4-1);
+  mesh.userData = {
+    speed:.3+Math.random()*.5,
+    rotSpeed:.01+Math.random()*.02,
+    amplitude:.5+Math.random()*2,
+    offset:Math.random()*Math.PI*2,
+    basePos:mesh.position.clone()
+  };
+  shapes.push(mesh);
+  geoGroup.add(mesh);
+}
+scene.add(geoGroup);
+
+// Ring
+const ringGeo = new THREE.TorusGeometry(1.5,.02,16,100);
+const ringMat = new THREE.MeshBasicMaterial({color:0x22d3ee,transparent:true,opacity:.15});
+const ring = new THREE.Mesh(ringGeo,ringMat);
+scene.add(ring);
+
+const ring2Geo = new THREE.TorusGeometry(2,.01,8,80);
+const ring2 = new THREE.Mesh(ring2Geo,new THREE.MeshBasicMaterial({color:0x3b82f6,transparent:true,opacity:.1}));
+scene.add(ring2);
+
+// Scroll tracking
+let scrollY=0;
+window.addEventListener('scroll',()=>{scrollY=window.scrollY/(document.body.scrollHeight-innerHeight);});
+
+// Animate
+function animate(time){
+  requestAnimationFrame(animate);
+  time*=.001;
+
+  mouseX+=(targetX-mouseX)*.1;
+  mouseY+=(targetY-mouseY)*.1;
+  cursorDot.style.left=mouseX+'px';
+  cursorDot.style.top=mouseY+'px';
+  cursorRing.style.left=mouseX+'px';
+  cursorRing.style.top=mouseY+'px';
+
+  const mx=(mouseX/innerWidth)*2-1;
+  const my=-(mouseY/innerHeight)*2+1;
+
+  camera.position.x+=((mx*.6)-camera.position.x)*.02;
+  camera.position.y+=((my*.3)-camera.position.y)*.02;
+  camera.lookAt(0,scrollY*4-2,0);
+
+  starsMesh.rotation.y+=.0001;
+  starsMesh.rotation.x+=.00005;
+
+  shapes.forEach(s=>{
+    const u=s.userData;
+    s.rotation.x+=u.rotSpeed;
+    s.rotation.y+=u.rotSpeed*.7;
+    const t=time*u.speed+u.offset;
+    s.position.x=u.basePos.x+mx*u.amplitude;
+    s.position.y=u.basePos.y+Math.sin(t)*u.amplitude*.5+my*u.amplitude*.5;
+    s.position.z=u.basePos.z+Math.cos(t)*u.amplitude*.3;
+  });
+
+  ring.rotation.x+=.002;
+  ring.rotation.y+=.003;
+  ring.position.y=scrollY*8-4;
+  ring2.rotation.x-=.003;
+  ring2.rotation.y-=.002;
+  ring2.position.y=scrollY*8-4;
+
+  renderer.render(scene,camera);
+}
+animate(0);
+
+window.addEventListener('resize',()=>{
+  camera.aspect=innerWidth/innerHeight;
+  camera.updateProjectionMatrix();
+  renderer.setSize(innerWidth,innerHeight);
+});
+</script>
 </body>
 </html>
