@@ -11,26 +11,10 @@
     background:#000;
     color:#fff;
     overflow-x:hidden;
-    cursor:none;
   }
   canvas {position:fixed;top:0;left:0;z-index:1;}
 
-  .cursor {
-    position:fixed;width:20px;height:20px;
-    border:2px solid #22d3ee;border-radius:50%;
-    pointer-events:none;z-index:999;
-    transform:translate(-50%,-50%);
-    transition:width .2s,height .2s,border-color .2s;
-  }
-  .cursor.dot {
-    position:fixed;width:4px;height:4px;
-    background:#22d3ee;border-radius:50%;
-    pointer-events:none;z-index:999;
-    transform:translate(-50%,-50%);
-  }
-  .cursor.hover {width:40px;height:40px;border-color:#f87171;}
-
-  .content {position:relative;z-index:10;pointer-events:all;}
+  .content {position:relative;z-index:10;}
   .section {
     min-height:100vh;display:flex;align-items:center;justify-content:center;
     padding:80px 24px;
@@ -88,15 +72,10 @@
     .card {padding:28px 20px;}
     .hero h1 {font-size:2em;}
     .skill-grid {grid-template-columns:1fr;}
-    .cursor,.cursor.dot {display:none;}
-    body {cursor:auto;}
   }
 </style>
 </head>
 <body>
-<div class="cursor dot"></div>
-<div class="cursor"></div>
-
 <div class="content">
 
 <!-- HERO -->
@@ -207,15 +186,8 @@
 <script type="module">
 import * as THREE from 'three';
 
-// Cursor
-const cursorDot = document.querySelector('.cursor.dot');
-const cursorRing = document.querySelector('.cursor');
 let mouseX=0,mouseY=0,targetX=0,targetY=0;
 document.addEventListener('mousemove',e=>{targetX=e.clientX;targetY=e.clientY;});
-document.querySelectorAll('.card,.skill-item,.tags span').forEach(el=>{
-  el.addEventListener('mouseenter',()=>cursorRing.classList.add('hover'));
-  el.addEventListener('mouseleave',()=>cursorRing.classList.remove('hover'));
-});
 
 // Three.js scene
 const scene = new THREE.Scene();
@@ -301,10 +273,6 @@ function animate(time){
 
   mouseX+=(targetX-mouseX)*.1;
   mouseY+=(targetY-mouseY)*.1;
-  cursorDot.style.left=mouseX+'px';
-  cursorDot.style.top=mouseY+'px';
-  cursorRing.style.left=mouseX+'px';
-  cursorRing.style.top=mouseY+'px';
 
   const mx=(mouseX/innerWidth)*2-1;
   const my=-(mouseY/innerHeight)*2+1;
