@@ -20,13 +20,13 @@
   .card {
     background:rgba(255,255,255,.55);backdrop-filter:blur(24px) saturate(120%);
     -webkit-backdrop-filter:blur(24px) saturate(120%);
-    border:1px solid rgba(0,0,0,.06);border-radius:16px;
+    border:1px solid rgba(0,0,0,.1);border-radius:16px;
     padding:48px;max-width:700px;width:100%;
-    box-shadow:0 8px 32px rgba(0,0,0,.04),inset 0 1px 0 rgba(255,255,255,.8);
+    box-shadow:0 4px 24px rgba(0,0,0,.1),0 0 0 1px rgba(0,0,0,.04),inset 0 1px 0 rgba(255,255,255,.8);
     transition:transform .3s,box-shadow .3s,background .3s;
   }
   .card:hover {
-    background:rgba(255,255,255,.7);box-shadow:0 12px 40px rgba(0,0,0,.08),inset 0 1px 0 rgba(255,255,255,.9);
+    background:rgba(255,255,255,.7);box-shadow:0 8px 36px rgba(0,0,0,.14),0 0 0 1px rgba(0,0,0,.06),inset 0 1px 0 rgba(255,255,255,.9);
     transform:translateY(-2px);
   }
 
@@ -184,7 +184,7 @@ const pGeo = new THREE.BufferGeometry();
 const N=2000,pos=new Float32Array(N*3),cols=new Float32Array(N*3);
 for(let i=0;i<N*3;i+=3){
   pos[i]=(Math.random()-.5)*20;pos[i+1]=(Math.random()-.5)*12;pos[i+2]=-Math.random()*8;
-  cols[i]=.07;cols[i+1]=.07;cols[i+2]=.07;
+  cols[i]=.04;cols[i+1]=.04;cols[i+2]=.04;
 }
 pGeo.setAttribute('position',new THREE.BufferAttribute(pos,3));
 pGeo.setAttribute('color',new THREE.BufferAttribute(cols,3));
