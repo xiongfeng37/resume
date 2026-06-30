@@ -8,11 +8,9 @@
   * {margin:0;padding:0;box-sizing:border-box;}
   body {
     font-family: -apple-system,'Microsoft YaHei',sans-serif;
-    background:#000;
-    color:#fff;
-    overflow-x:hidden;
+    background:#f5f5f5;color:#1a1a1a;overflow-x:hidden;
   }
-  canvas {position:fixed;top:0;left:0;z-index:1;}
+  canvas {position:fixed;top:0;left:0;z-index:1;pointer-events:none;}
 
   .content {position:relative;z-index:10;}
   .section {
@@ -20,53 +18,50 @@
     padding:80px 24px;
   }
   .card {
-    background:rgba(15,23,42,.85);backdrop-filter:blur(20px);
-    border:1px solid rgba(34,211,238,.15);
-    border-radius:20px;padding:48px;max-width:700px;width:100%;
-    box-shadow:0 20px 60px rgba(0,0,0,.5), inset 0 1px 0 rgba(255,255,255,.05);
-    transition:transform .4s,border-color .4s;
+    background:rgba(255,255,255,.92);backdrop-filter:blur(20px);
+    border:1px solid #e0e0e0;border-radius:16px;
+    padding:48px;max-width:700px;width:100%;
+    box-shadow:0 4px 24px rgba(0,0,0,.06);
+    transition:transform .3s,box-shadow .3s;
   }
-  .card:hover {border-color:rgba(34,211,238,.4);transform:translateY(-4px);}
+  .card:hover {box-shadow:0 8px 36px rgba(0,0,0,.1);transform:translateY(-2px);}
 
   .hero {text-align:center;}
-  .hero h1 {font-size:3.2em;font-weight:900;letter-spacing:.06em;margin-bottom:8px;
-    background:linear-gradient(135deg,#22d3ee,#3b82f6);-webkit-background-clip:text;
-    -webkit-text-fill-color:transparent;}
-  .hero .sub {font-size:1.15em;color:#94a3b8;letter-spacing:.2em;margin-bottom:24px;}
+  .hero h1 {font-size:3em;font-weight:900;letter-spacing:.08em;margin-bottom:8px;color:#111;}
+  .hero .sub {font-size:1.1em;color:#888;letter-spacing:.15em;margin-bottom:28px;}
   .hero .tags {display:flex;gap:12px;justify-content:center;flex-wrap:wrap;}
   .hero .tags span {
-    background:rgba(34,211,238,.1);border:1px solid rgba(34,211,238,.2);
-    padding:6px 18px;border-radius:20px;font-size:.85em;color:#67e8f9;
+    background:#f0f0f0;border:1px solid #ddd;
+    padding:6px 18px;border-radius:20px;font-size:.85em;color:#555;
   }
 
   .title {
-    font-size:1.4em;font-weight:800;margin-bottom:24px;padding-bottom:16px;
-    border-bottom:2px solid rgba(34,211,238,.2);
-    display:flex;align-items:center;gap:10px;
+    font-size:1.3em;font-weight:800;margin-bottom:28px;padding-bottom:16px;
+    border-bottom:2px solid #111;color:#111;display:flex;align-items:center;gap:10px;
   }
-  .title::before {content:'';width:4px;height:22px;background:#22d3ee;border-radius:2px;}
+  .title::before {content:'';width:3px;height:20px;background:#111;border-radius:1px;}
 
-  .jobs {display:flex;flex-direction:column;gap:28px;}
-  .job {padding-bottom:24px;border-bottom:1px solid rgba(255,255,255,.06);}
+  .jobs {display:flex;flex-direction:column;gap:24px;}
+  .job {padding-bottom:20px;border-bottom:1px solid #eee;}
   .job:last-child {border-bottom:none;padding-bottom:0;}
-  .job h3 {font-size:1.05em;color:#e2e8f0;margin-bottom:4px;}
-  .job .date {font-size:.8em;color:#64748b;margin-bottom:8px;}
-  .job p {font-size:.88em;color:#94a3b8;line-height:1.7;}
-  .job .results {margin-top:8px;font-size:.85em;color:#cbd5e1;line-height:1.8;}
-  .job .results span {color:#22d3ee;font-weight:600;}
+  .job h3 {font-size:1.05em;color:#111;margin-bottom:2px;}
+  .job .date {font-size:.8em;color:#999;margin-bottom:8px;}
+  .job p {font-size:.88em;color:#666;line-height:1.7;}
+  .job .results {margin-top:8px;font-size:.85em;color:#444;line-height:1.9;}
+  .job .results span {color:#111;font-weight:700;}
 
   .skill-grid {display:grid;grid-template-columns:1fr 1fr;gap:14px;}
-  .skill-item {background:rgba(34,211,238,.05);border:1px solid rgba(34,211,238,.1);border-radius:12px;padding:16px;}
-  .skill-item .label {font-size:.78em;color:#22d3ee;font-weight:700;margin-bottom:4px;text-transform:uppercase;letter-spacing:.05em;}
-  .skill-item .val {font-size:.85em;color:#94a3b8;line-height:1.6;}
+  .skill-item {background:#fafafa;border:1px solid #eee;border-radius:10px;padding:16px;}
+  .skill-item .label {font-size:.75em;color:#111;font-weight:700;margin-bottom:4px;text-transform:uppercase;letter-spacing:.06em;}
+  .skill-item .val {font-size:.85em;color:#666;line-height:1.6;}
 
   .eval-list {display:flex;flex-direction:column;gap:14px;}
-  .eval-item {font-size:.9em;color:#cbd5e1;line-height:1.7;padding-left:16px;border-left:2px solid rgba(34,211,238,.3);}
+  .eval-item {font-size:.9em;color:#444;line-height:1.7;padding-left:16px;border-left:2px solid #111;}
 
   .contact {display:flex;gap:28px;justify-content:center;flex-wrap:wrap;margin-top:20px;}
-  .contact span {color:#94a3b8;font-size:.9em;}
+  .contact span {color:#888;font-size:.9em;}
 
-  .footer {text-align:center;padding:40px;color:#475569;font-size:.78em;position:relative;z-index:10;}
+  .footer {text-align:center;padding:40px;color:#bbb;font-size:.78em;position:relative;z-index:10;}
 
   @media (max-width:600px) {
     .card {padding:28px 20px;}
@@ -78,7 +73,6 @@
 <body>
 <div class="content">
 
-<!-- HERO -->
 <div class="section">
   <div class="card hero">
     <h1>熊 锋</h1>
@@ -87,37 +81,23 @@
       <span>京东政企业务部</span><span>韩语 Topik5</span><span>AI 开发</span><span>成都双流</span>
     </div>
     <div class="contact">
-      <span>📧 2118668735@qq.com</span><span>📱 13558727604</span>
+      <span>2118668735@qq.com</span><span>13558727604</span>
     </div>
   </div>
 </div>
 
-<!-- 核心优势 -->
 <div class="section">
   <div class="card">
     <div class="title">核心优势</div>
     <div class="skill-grid">
-      <div class="skill-item">
-        <div class="label">TOB 全链路</div>
-        <div class="val">近3年京东商务一线，熟悉引流→电销→商机→运营→下单→开票→回款闭环，精通后端对账催收，对前端亦有完整理解。</div>
-      </div>
-      <div class="skill-item">
-        <div class="label">AI + 业务提效</div>
-        <div class="val">非技术岗中罕见的 AI 实战能力——借助 DeepSeek/OpenCode 独立开发桌面应用，v16 覆盖 50+ 同事（50min→1min）；AI 拼单产品获公司立项并带队参赛。</div>
-      </div>
-      <div class="skill-item">
-        <div class="label">客户导向</div>
-        <div class="val">部队客户高合规场景下 <span style="color:#22d3ee">2年0投诉</span>，逾期率 <span style="color:#f87171">23%→18%</span>，擅长复杂规则下维护客户关系并推进回款。</div>
-      </div>
-      <div class="skill-item">
-        <div class="label">跨行业适应</div>
-        <div class="val">半导体翻译→机械工程→京东商务，学习速度快，临场沟通出色，能快速融入新业务场景。</div>
-      </div>
+      <div class="skill-item"><div class="label">TOB 全链路</div><div class="val">近3年京东商务一线，熟悉引流→电销→商机→运营→下单→开票→回款闭环，精通后端对账催收，对前端亦有完整理解。</div></div>
+      <div class="skill-item"><div class="label">AI + 业务提效</div><div class="val">非技术岗中罕见的 AI 实战能力——借助 DeepSeek/OpenCode 独立开发桌面应用，v16 覆盖 50+ 同事（50min→1min）；AI 拼单产品获公司立项并带队参赛。</div></div>
+      <div class="skill-item"><div class="label">客户导向</div><div class="val">部队客户高合规场景下 <b>2年0投诉</b>，逾期率 <b>23%→18%</b>，擅长复杂规则下维护客户关系并推进回款。</div></div>
+      <div class="skill-item"><div class="label">跨行业适应</div><div class="val">半导体翻译→机械工程→京东商务，学习速度快，临场沟通出色，能快速融入新业务场景。</div></div>
     </div>
   </div>
 </div>
 
-<!-- 工作经历 -->
 <div class="section">
   <div class="card">
     <div class="title">工作经历</div>
@@ -149,7 +129,6 @@
   </div>
 </div>
 
-<!-- 专业技能 -->
 <div class="section">
   <div class="card">
     <div class="title">专业技能</div>
@@ -162,13 +141,12 @@
   </div>
 </div>
 
-<!-- 自我评价 -->
 <div class="section">
   <div class="card">
     <div class="title">自我评价</div>
     <div class="eval-list">
       <div class="eval-item">近3年京东 TOB 商务一线，从后端对账切入，对前端引流、电销、商机挖掘同样熟悉，有完整业务链条视角。</div>
-      <div class="eval-item"><span style="color:#22d3ee;font-weight:600;">非技术岗中少有的 AI 实战能力</span>——不等公司给系统，自己发现痛点自己动手解决，已落地2个产品（v16工具50+用户 + JOY拼拼获公司立项），被邀请在集团AI大赛演讲。</div>
+      <div class="eval-item"><b>非技术岗中少有的 AI 实战能力</b>——不等公司给系统，自己发现痛点自己动手解决，已落地2个产品（v16工具50+用户 + JOY拼拼获公司立项），被邀请在集团AI大赛演讲。</div>
       <div class="eval-item">高合规、高要求的部队客户场景下2年0投诉，逾期率持续下降，抗压能力和客户信任构建能力稳定。</div>
       <div class="eval-item">执行力强、逻辑清晰，善于在复杂信息中快速定位关键问题并推动闭环。</div>
       <div class="eval-item">跨行业适应能力强（半导体翻译→机械工程→京东商务），学习速度快，临场沟通出色。</div>
@@ -189,7 +167,6 @@ import * as THREE from 'three';
 let mouseX=0,mouseY=0,targetX=0,targetY=0;
 document.addEventListener('mousemove',e=>{targetX=e.clientX;targetY=e.clientY;});
 
-// Three.js scene
 const scene = new THREE.Scene();
 const camera = new THREE.PerspectiveCamera(60,innerWidth/innerHeight,.1,100);
 camera.position.z=8;
@@ -198,118 +175,76 @@ renderer.setSize(innerWidth,innerHeight);
 renderer.setPixelRatio(Math.min(devicePixelRatio,2));
 document.body.prepend(renderer.domElement);
 
-// Stars
-const starsGeo = new THREE.BufferGeometry();
-const stars = 1500;
-const pos = new Float32Array(stars*3);
-const colors = new Float32Array(stars*3);
-for(let i=0;i<stars*3;i+=3){
-  pos[i]=(Math.random()-.5)*30;
-  pos[i+1]=(Math.random()-.5)*20;
-  pos[i+2]=-Math.random()*10;
-  colors[i]=.3+Math.random()*.4;
-  colors[i+1]=.6+Math.random()*.3;
-  colors[i+2]=.8+Math.random()*.2;
+// Particle field
+const pGeo = new THREE.BufferGeometry();
+const N=2000,pos=new Float32Array(N*3),cols=new Float32Array(N*3);
+for(let i=0;i<N*3;i+=3){
+  pos[i]=(Math.random()-.5)*20;pos[i+1]=(Math.random()-.5)*12;pos[i+2]=-Math.random()*8;
+  const g=.15+Math.random()*.3;cols[i]=g;cols[i+1]=g;cols[i+2]=g;
 }
-starsGeo.setAttribute('position',new THREE.BufferAttribute(pos,3));
-starsGeo.setAttribute('color',new THREE.BufferAttribute(colors,3));
-const starsMat = new THREE.PointsMaterial({size:.025,vertexColors:true,transparent:true,opacity:.8});
-const starsMesh = new THREE.Points(starsGeo,starsMat);
-scene.add(starsMesh);
+pGeo.setAttribute('position',new THREE.BufferAttribute(pos,3));
+pGeo.setAttribute('color',new THREE.BufferAttribute(cols,3));
+const pMat = new THREE.PointsMaterial({size:.02,vertexColors:true,transparent:true,opacity:.6});
+const particles = new THREE.Points(pGeo,pMat);
+scene.add(particles);
 
-// Floating geometric shapes
+// Floating wireframe shapes
 const geoGroup = new THREE.Group();
 const shapes = [];
 const geos = [
-  new THREE.IcosahedronGeometry(.3,0),
+  new THREE.IcosahedronGeometry(.25,0),
+  new THREE.OctahedronGeometry(.2,0),
+  new THREE.TetrahedronGeometry(.22,0),
+  new THREE.IcosahedronGeometry(.18,0),
+  new THREE.DodecahedronGeometry(.2,0),
   new THREE.OctahedronGeometry(.25,0),
-  new THREE.TorusGeometry(.2,.06,16,32),
-  new THREE.TetrahedronGeometry(.25,0),
-  new THREE.TorusKnotGeometry(.18,.05,64,16),
-  new THREE.IcosahedronGeometry(.2,0),
-  new THREE.OctahedronGeometry(.3,0),
-  new THREE.ConeGeometry(.2,.35,8),
-  new THREE.BoxGeometry(.35,.35,.35),
-  new THREE.DodecahedronGeometry(.22,0),
+  new THREE.ConeGeometry(.18,.3,6),
+  new THREE.TetrahedronGeometry(.2,0),
+  new THREE.IcosahedronGeometry(.22,0),
+  new THREE.OctahedronGeometry(.18,0),
 ];
 for(let i=0;i<10;i++){
-  const mat = new THREE.MeshPhysicalMaterial({
-    color:new THREE.Color().setHSL(.55+i*.03,.8,.5+i*.03),
-    metalness:.1,roughness:.3,transparent:true,opacity:.7,
-    envMapIntensity:.5,clearcoat:.3
-  });
-  const mesh = new THREE.Mesh(geos[i%geos.length],mat);
-  mesh.position.set((Math.random()-.5)*8,(Math.random()-.5)*5,-Math.random()*4-1);
-  mesh.userData = {
-    speed:.3+Math.random()*.5,
-    rotSpeed:.01+Math.random()*.02,
-    amplitude:.5+Math.random()*2,
-    offset:Math.random()*Math.PI*2,
-    basePos:mesh.position.clone()
-  };
-  shapes.push(mesh);
-  geoGroup.add(mesh);
+  const mat = new THREE.MeshBasicMaterial({color:new THREE.Color().setHSL(0,0,.15+.05*i),transparent:true,opacity:.15});
+  const wire = new THREE.LineSegments(
+    new THREE.EdgesGeometry(geos[i%geos.length]),
+    new THREE.LineBasicMaterial({color:new THREE.Color().setHSL(0,0,.3+.03*i),transparent:true,opacity:.25})
+  );
+  const group = new THREE.Group();
+  group.add(new THREE.Mesh(geos[i%geos.length],mat));
+  group.add(wire);
+  group.position.set((Math.random()-.5)*8,(Math.random()-.5)*5,-Math.random()*3-1);
+  group.userData={speed:.3+Math.random()*.5,rotSpeed:.01+Math.random()*.02,amplitude:.6+Math.random()*2,offset:Math.random()*Math.PI*2,basePos:group.position.clone()};
+  shapes.push(group);geoGroup.add(group);
 }
 scene.add(geoGroup);
 
-// Ring
-const ringGeo = new THREE.TorusGeometry(1.5,.02,16,100);
-const ringMat = new THREE.MeshBasicMaterial({color:0x22d3ee,transparent:true,opacity:.15});
-const ring = new THREE.Mesh(ringGeo,ringMat);
+// Subtle rings
+const rGeo = new THREE.TorusGeometry(1.6,.01,16,100);
+const ring = new THREE.Mesh(rGeo,new THREE.MeshBasicMaterial({color:0xcccccc,transparent:true,opacity:.08}));
 scene.add(ring);
-
-const ring2Geo = new THREE.TorusGeometry(2,.01,8,80);
-const ring2 = new THREE.Mesh(ring2Geo,new THREE.MeshBasicMaterial({color:0x3b82f6,transparent:true,opacity:.1}));
+const r2Geo = new THREE.TorusGeometry(2.2,.008,8,80);
+const ring2 = new THREE.Mesh(r2Geo,new THREE.MeshBasicMaterial({color:0xaaaaaa,transparent:true,opacity:.05}));
 scene.add(ring2);
 
-// Scroll tracking
 let scrollY=0;
 window.addEventListener('scroll',()=>{scrollY=window.scrollY/(document.body.scrollHeight-innerHeight);});
 
-// Animate
 function animate(time){
-  requestAnimationFrame(animate);
-  time*=.001;
-
-  mouseX+=(targetX-mouseX)*.1;
-  mouseY+=(targetY-mouseY)*.1;
-
-  const mx=(mouseX/innerWidth)*2-1;
-  const my=-(mouseY/innerHeight)*2+1;
-
-  camera.position.x+=((mx*.6)-camera.position.x)*.02;
-  camera.position.y+=((my*.3)-camera.position.y)*.02;
+  requestAnimationFrame(animate);time*=.001;
+  mouseX+=(targetX-mouseX)*.08;
+  mouseY+=(targetY-mouseY)*.08;
+  const mx=(mouseX/innerWidth)*2-1,my=-(mouseY/innerHeight)*2+1;
+  camera.position.x+=(mx*.4-camera.position.x)*.02;
+  camera.position.y+=(my*.2-camera.position.y)*.02;
   camera.lookAt(0,scrollY*4-2,0);
-
-  starsMesh.rotation.y+=.0001;
-  starsMesh.rotation.x+=.00005;
-
-  shapes.forEach(s=>{
-    const u=s.userData;
-    s.rotation.x+=u.rotSpeed;
-    s.rotation.y+=u.rotSpeed*.7;
-    const t=time*u.speed+u.offset;
-    s.position.x=u.basePos.x+mx*u.amplitude;
-    s.position.y=u.basePos.y+Math.sin(t)*u.amplitude*.5+my*u.amplitude*.5;
-    s.position.z=u.basePos.z+Math.cos(t)*u.amplitude*.3;
-  });
-
-  ring.rotation.x+=.002;
-  ring.rotation.y+=.003;
-  ring.position.y=scrollY*8-4;
-  ring2.rotation.x-=.003;
-  ring2.rotation.y-=.002;
-  ring2.position.y=scrollY*8-4;
-
+  particles.rotation.y+=.0001;
+  shapes.forEach(s=>{const u=s.userData;s.rotation.x+=u.rotSpeed;s.rotation.y+=u.rotSpeed*.7;const t=time*u.speed+u.offset;s.position.x=u.basePos.x+mx*u.amplitude;s.position.y=u.basePos.y+Math.sin(t)*u.amplitude*.4+my*u.amplitude*.4;s.position.z=u.basePos.z+Math.cos(t)*u.amplitude*.2;});
+  ring.rotation.x+=.002;ring.rotation.y+=.003;ring.position.y=scrollY*8-4;
+  ring2.rotation.x-=.002;ring2.rotation.y-=.002;ring2.position.y=scrollY*8-4;
   renderer.render(scene,camera);
 }
 animate(0);
-
-window.addEventListener('resize',()=>{
-  camera.aspect=innerWidth/innerHeight;
-  camera.updateProjectionMatrix();
-  renderer.setSize(innerWidth,innerHeight);
-});
+window.addEventListener('resize',()=>{camera.aspect=innerWidth/innerHeight;camera.updateProjectionMatrix();renderer.setSize(innerWidth,innerHeight);});
 </script>
 </body>
 </html>
