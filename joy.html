@@ -3,328 +3,258 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>JOY拼拼 - 匿名静默拼单</title>
+<title>京默拼单 - LBS匿名静默拼单</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
-body{font-family:-apple-system,'Microsoft YaHei',sans-serif;background:#f5f5f5;color:#1a1a1a;overflow-x:hidden}
-.container{max-width:960px;margin:0 auto;padding:40px 20px}
+body{font-family:-apple-system,'Microsoft YaHei',sans-serif;background-color:#f5f5f5;color:#1a1a1a;overflow-x:hidden;position:relative}
+body::before{content:'';position:fixed;top:-200px;right:-200px;width:600px;height:600px;border:2.5px solid rgba(228,57,60,.24);border-radius:50%;pointer-events:none;z-index:0}
+body::after{content:'';position:fixed;bottom:-300px;left:-200px;width:800px;height:800px;border:2.5px solid rgba(228,57,60,.2);border-radius:50%;pointer-events:none;z-index:0}
 
-.hero{text-align:center;padding:60px 20px}
-.hero .logo{font-size:3em;font-weight:900;color:#e4393c;letter-spacing:.04em}
-.hero .sub{font-size:1.15em;color:#888;margin-top:8px;letter-spacing:.12em}
-.hero .desc{font-size:.95em;color:#aaa;margin-top:16px;max-width:560px;margin-left:auto;margin-right:auto;line-height:1.7}
+.bg-accent{position:fixed;pointer-events:none;z-index:0}
+.bg-accent.a{top:8%;left:-50px;width:100px;height:100px;border:2.5px solid rgba(228,57,60,.32);border-radius:50%}
+.bg-accent.b{bottom:12%;right:-30px;width:160px;height:160px;border:2.5px solid rgba(228,57,60,.28);border-radius:50%}
+.bg-accent.c{top:50%;right:3%;width:60px;height:60px;background:rgba(228,57,60,.096);border-radius:50%}
 
-.section-title{font-size:1.4em;font-weight:800;margin:60px 0 28px;padding-bottom:14px;border-bottom:3px solid #e4393c;display:flex;align-items:center;gap:10px}
-.section-title::before{content:'';width:4px;height:24px;background:#e4393c;border-radius:2px}
+.watermark{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:0;overflow:hidden}
+.watermark span{position:absolute;font-size:18px;color:rgba(0,0,0,.03);white-space:nowrap;font-weight:700;letter-spacing:.2em;user-select:none}
 
-/* Demo area */
-.demo-box{background:#fff;border-radius:14px;box-shadow:0 4px 24px rgba(0,0,0,.08);padding:32px;max-width:720px;margin:0 auto}
+section{position:relative;z-index:1}
 
-.scenario-tabs{display:flex;gap:0;margin-bottom:24px;border-radius:10px;overflow:hidden;border:1px solid #e8e8e8}
-.scenario-tabs button{flex:1;padding:14px;border:none;background:#fafafa;cursor:pointer;font-size:.9em;color:#888;font-family:inherit;transition:all .2s}
-.scenario-tabs button.active{background:#e4393c;color:#fff}
-.scenario-tabs button:hover:not(.active){background:#f0f0f0}
+section{padding:80px 20px;max-width:960px;margin:0 auto}
 
-.cart-list{display:flex;flex-direction:column;gap:12px;margin-bottom:20px}
-.cart-item{display:flex;justify-content:space-between;align-items:center;padding:14px 18px;background:#fafafa;border-radius:10px;border:1px solid #eee}
-.cart-item .info{display:flex;flex-direction:column;gap:3px}
-.cart-item .name{font-weight:600;color:#111}
-.cart-item .detail{font-size:.8em;color:#999}
-.cart-item .price{font-weight:700;color:#e4393c;font-size:1.05em}
-.cart-total{text-align:right;padding:16px;font-size:1.1em}
-.cart-total .total-price{font-weight:900;color:#e4393c;font-size:1.3em}
-.cart-total .gap{font-size:.85em;color:#ff6600;margin-top:4px}
+/* Hero */
+.hero{text-align:center;padding:120px 20px 80px}
+.hero .tag{display:inline-block;border:1px solid #e4393c;color:#e4393c;padding:6px 20px;border-radius:20px;font-size:.8em;letter-spacing:.15em;margin-bottom:28px;background:#fff}
+.hero h1{font-size:3.5em;font-weight:900;color:#111;letter-spacing:.06em;margin-bottom:16px;line-height:1.2}
+.hero h1 span{color:#e4393c}
+.hero .punch{font-size:1.15em;color:#888;max-width:600px;margin:0 auto 40px;line-height:1.8}
 
-.checkout-btn{width:100%;padding:16px;background:#e4393c;color:#fff;border:none;border-radius:10px;font-size:1.1em;font-weight:700;cursor:pointer;font-family:inherit;transition:all .2s}
-.checkout-btn:hover{background:#d32f2f}
-.checkout-btn:disabled{background:#ccc;cursor:not-allowed}
+/* Big Numbers */
+.num-row{display:flex;gap:60px;justify-content:center;flex-wrap:wrap;padding:20px 0}
+.num-block{text-align:center;background:#fff;border-radius:0 16px 16px 0;padding:32px 24px;min-width:140px;box-shadow:0 2px 16px rgba(0,0,0,.06);border:1px solid #eee;border-left:3px solid #e4393c;transition:box-shadow .3s,transform .3s}
+.num-block:hover{box-shadow:0 4px 20px rgba(0,0,0,.1);transform:translateY(-2px)}
+.num-block .big{font-size:2.8em;font-weight:900;color:#e4393c;line-height:1}
+.num-block .label{font-size:.82em;color:#999;margin-top:8px}
+.gap-note{text-align:center;color:#bbb;margin-top:20px;font-size:.85em}
 
-/* Matching overlay */
-.matching-overlay{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.6);z-index:1000;justify-content:center;align-items:center}
-.matching-overlay.show{display:flex}
-.matching-card{background:#fff;border-radius:16px;padding:40px;max-width:420px;width:90%;text-align:center}
-.matching-card .spinner{width:60px;height:60px;border:4px solid #eee;border-top-color:#e4393c;border-radius:50%;animation:spin 1s linear infinite;margin:0 auto 20px}
-@keyframes spin{to{transform:rotate(360deg)}}
-.matching-card .status{font-size:1.2em;font-weight:700;color:#111;margin-bottom:8px}
-.matching-card .timer{font-size:2em;font-weight:900;color:#e4393c;margin:12px 0}
-.matching-card .detail-text{font-size:.85em;color:#999;line-height:1.6}
-.matching-card .neighbors{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin:16px 0}
-.matching-card .neighbor{background:#fff3f3;border:1px solid #ffcdd2;border-radius:20px;padding:6px 16px;font-size:.8em;color:#d32f2f;animation:fadeIn .4s ease}
-@keyframes fadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
-.matching-card .success{font-size:1.3em;font-weight:900;color:#2e7d32;margin-top:12px}
-.matching-card .saved{font-size:.9em;color:#666;margin-top:6px}
+/* Title */
+.sec-title{font-size:1.5em;font-weight:900;color:#111;margin-bottom:36px;display:flex;align-items:center;gap:12px}
+.sec-title::before{content:'';width:3px;height:22px;background:#e4393c;border-radius:1px}
 
-/* Advantages */
-.adv-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}
-.adv-card{background:#fff;border-radius:12px;padding:28px;box-shadow:0 2px 16px rgba(0,0,0,.06);border:1px solid #eee;transition:transform .2s,box-shadow .2s}
-.adv-card:hover{transform:translateY(-2px);box-shadow:0 6px 28px rgba(0,0,0,.1)}
-.adv-card .num{font-size:2em;font-weight:900;color:#e4393c;margin-bottom:8px}
-.adv-card .adv-title{font-size:1.05em;font-weight:700;margin-bottom:6px}
-.adv-card .adv-desc{font-size:.85em;color:#888;line-height:1.6}
-
-/* Compare */
-.compare-table{width:100%;border-collapse:collapse;background:#fff;border-radius:12px;overflow:hidden;box-shadow:0 2px 16px rgba(0,0,0,.06)}
-.compare-table th{background:#111;color:#fff;padding:14px;font-size:.85em;text-align:center}
-.compare-table td{padding:14px;text-align:center;border-bottom:1px solid #eee;font-size:.88em}
-.compare-table tr:last-child td{border-bottom:none}
-.compare-table .yes{color:#2e7d32;font-weight:700}
-.compare-table .no{color:#ccc}
-.compare-table .best{background:#fff8f8}
+/* Stat cards */
+.stat-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+@media(max-width:700px){.stat-grid{grid-template-columns:1fr}}
+.stat-card{background:#fff;border:1px solid #eee;border-left:3px solid #e4393c;border-radius:0 14px 14px 0;padding:32px;box-shadow:0 2px 16px rgba(0,0,0,.06);transition:box-shadow .3s,transform .3s}
+.stat-card:hover{box-shadow:0 6px 24px rgba(0,0,0,.1);transform:translateY(-2px)}
+.stat-card .s-icon{font-size:2em;margin-bottom:12px}
+.stat-card .s-title{font-size:1.05em;font-weight:700;color:#111;margin-bottom:10px}
+.stat-card .s-desc{font-size:.85em;color:#888;line-height:1.7}
 
 /* Flow */
-.flow{display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:12px;padding:28px 0}
-.flow-step{background:#fff;border:2px solid #e8e8e8;border-radius:12px;padding:20px 28px;text-align:center;min-width:120px}
-.flow-step.active{border-color:#e4393c;box-shadow:0 0 0 3px rgba(228,57,60,.1)}
-.flow-step .step-num{font-size:.7em;color:#999;margin-bottom:4px}
-.flow-step .step-text{font-weight:700;font-size:.9em}
-.flow-arrow{font-size:1.3em;color:#ccc;font-weight:900}
+.flow-visual{display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:0;padding:40px 0}
+.flow-node{text-align:center;padding:20px 28px;background:#fff;border:1px solid #eee;border-left:3px solid #e4393c;border-radius:0 14px 14px 0;min-width:130px;box-shadow:0 2px 12px rgba(0,0,0,.04);transition:box-shadow .3s,transform .3s}
+.flow-node:hover{box-shadow:0 4px 16px rgba(0,0,0,.08);transform:translateY(-2px)}
+.flow-node .fn-icon{font-size:1.8em;margin-bottom:8px}
+.flow-node .fn-text{font-size:.85em;color:#555;font-weight:600}
+.flow-arrow{font-size:1.5em;color:#e4393c;margin:0 10px;font-weight:900}
+@media(max-width:700px){.flow-visual{flex-direction:column;gap:12px}.flow-arrow{transform:rotate(90deg)}}
 
-@media(max-width:600px){
-  .adv-grid{grid-template-columns:1fr}
-  .compare-table{font-size:.7em}
-  .flow{flex-direction:column}
-  .flow-arrow{transform:rotate(90deg)}
-}
+/* Compare */
+.compare{overflow-x:auto}
+.compare table{width:100%;border-collapse:collapse;min-width:600px;background:#fff;border-radius:14px;overflow:hidden;box-shadow:0 2px 16px rgba(0,0,0,.06)}
+.compare th{background:#111;color:#fff;padding:14px;font-size:.82em;text-align:center}
+.compare th.hl{background:#e4393c}
+.compare td{padding:12px;text-align:center;border-bottom:1px solid #eee;font-size:.85em;color:#666}
+.compare tr:last-child td{border-bottom:none}
+.compare .win{color:#2e7d32;font-weight:700}
+.compare .lose{color:#ccc}
+
+/* Timeline */
+.timeline{display:flex;flex-direction:column;gap:0;padding-left:12px}
+.tl-item{display:flex;gap:24px;padding:28px 0 28px 32px;border-left:2px solid #e8e8e8;position:relative}
+.tl-item::before{content:'';position:absolute;left:-6px;top:34px;width:10px;height:10px;background:#e4393c;border-radius:50%}
+.tl-item .tl-phase{font-size:.8em;color:#e4393c;font-weight:700;min-width:90px;background:#fff;border:1px solid #eee;border-radius:8px;padding:6px 12px;text-align:center}
+.tl-item .tl-content .tl-head{font-size:1.05em;font-weight:700;color:#111;margin-bottom:4px}
+.tl-item .tl-content .tl-desc{font-size:.85em;color:#888}
+
+/* Footer */
+.footer{text-align:center;padding:60px 20px;color:#ccc;font-size:.8em;border-top:1px solid #eee;margin-top:80px}
+
+/* Animations */
+.anim{opacity:0;transform:translateY(40px);transition:opacity .7s ease,transform .7s ease}
+.anim.visible{opacity:1;transform:translateY(0)}
+.stat-card.anim{transition-delay:0s}
+.stat-card:nth-child(2).anim{transition-delay:.1s}
+.stat-card:nth-child(3).anim{transition-delay:.2s}
+.stat-card:nth-child(4).anim{transition-delay:.25s}
+.num-block.anim{transition-delay:0s}
+.num-block:nth-child(2).anim{transition-delay:.08s}
+.num-block:nth-child(3).anim{transition-delay:.16s}
+.num-block:nth-child(4).anim{transition-delay:.24s}
 </style>
 </head>
 <body>
-
-<div class="container">
+<div class="bg-accent a"></div>
+<div class="bg-accent b"></div>
+<div class="bg-accent c"></div>
+<div class="watermark" id="watermark"></div>
 
 <!-- Hero -->
-<div class="hero">
-  <div class="logo">JOY 拼 拼</div>
-  <div class="sub">匿名静默 · LBS 自动拼单 · 跨品类凑免邮</div>
-  <div class="desc">京东自营小件购物不满59元？AI自动匹配同小区匿名邻居帮你凑单免运费。<br>不用找同事、不用发微信、不用囤货 —— 你只管下单，剩下的AI来做。</div>
-</div>
+<section class="hero">
+  <div class="tag">AI产品孵化 · 京默拼单</div>
+  <h1>不满<span>59</span>元？<br>AI帮你<span>匿名</span>凑单免运费</h1>
+  <p class="punch">你只管下单。AI自动匹配同小区邻居，跨品类合并订单，凑满59元免去6元运费。<br>全程互不相见、不加微信、不用开口。</p>
+</section>
 
-<!-- Demo -->
-<div class="section-title">模拟体验</div>
-<div class="demo-box" id="demo">
-  <div class="scenario-tabs">
-    <button class="active" onclick="switchScenario('snack')">零食饮料 ¥32.8</button>
-    <button onclick="switchScenario('office')">办公文具 ¥18.5</button>
-    <button onclick="switchScenario('daily')">日常洗护 ¥45.0</button>
+<!-- Killer stats -->
+<section>
+  <div class="num-row">
+    <div class="num-block"><div class="big count-up" data-target="57" data-suffix="%">57%</div><div class="label">自营小件销量占比</div></div>
+    <div class="num-block"><div class="big count-up" data-target="28.5" data-suffix="%">28.5%</div><div class="label">对应的销售额占比</div></div>
+    <div class="num-block"><div class="big">6元</div><div class="label">每单流失的运费</div></div>
+    <div class="num-block"><div class="big count-up" data-target="68" data-suffix="%">68%</div><div class="label">人群抵触人情拼单</div></div>
   </div>
-  <div id="cart-area"></div>
-  <div class="cart-total">
-    实付 <span class="total-price" id="total-price">¥32.80</span><br>
-    <span class="gap" id="gap">还差 ¥26.20 免运费 · 运费 ¥6.00</span>
-  </div>
-  <button class="checkout-btn" id="checkout-btn" onclick="startMatching()">匿名静默拼单 · 免运费</button>
-</div>
+  <p class="gap-note">海量订单因运费流失 · 海量用户因社交障碍放弃拼单 · 中间存在巨大转化空白</p>
+</section>
 
-<!-- Matching overlay -->
-<div class="matching-overlay" id="overlay">
-  <div class="matching-card" id="match-card">
-    <div id="match-content"></div>
+<!-- Product value -->
+<section>
+  <div class="sec-title">为什么是京默拼单</div>
+  <div class="stat-grid">
+    <div class="stat-card">
+      <div class="s-icon">🛡️</div>
+      <div class="s-title">全匿名 · 零社交</div>
+      <div class="s-desc">拼单过程中用户互不可见，不暴露身份、不建群、不加微信。72.6%青年有拼单需求，68%抵触人情社交——京默拼单就是为这68%的人设计的。</div>
+    </div>
+    <div class="stat-card">
+      <div class="s-icon">🔄</div>
+      <div class="s-title">跨品类自由混拼</div>
+      <div class="s-desc">你买纸巾，邻居买零食，另一人买文具。不限品类，AI实时计算最优组合。区别于美团拼好饭"只能拼同款"的局限。</div>
+    </div>
+    <div class="stat-card">
+      <div class="s-icon">⚡</div>
+      <div class="s-title">AI四层智能分流</div>
+      <div class="s-desc">结算页自动判定：百亿补贴直免 / 满59元直免 / 入LBS匹配池拼单 / 用户关闭开关则收费。四条链路互不干扰，用户无感知。</div>
+    </div>
+    <div class="stat-card">
+      <div class="s-icon">⏱️</div>
+      <div class="s-title">10分钟极速成团</div>
+      <div class="s-desc">默认10分钟匹配窗口，高峰压缩至8分钟。超时自动单人下单，零等待焦虑。同网格优先匹配，成团率预估75%+。</div>
+    </div>
   </div>
-</div>
+</section>
 
-<!-- Flow -->
-<div class="section-title">产品流程</div>
-<div class="flow">
-  <div class="flow-step active"><div class="step-num">STEP 1</div><div class="step-text">购物结算</div></div>
-  <div class="flow-arrow">→</div>
-  <div class="flow-step"><div class="step-num">STEP 2</div><div class="step-text">AI 自动判定</div></div>
-  <div class="flow-arrow">→</div>
-  <div class="flow-step"><div class="step-num">STEP 3</div><div class="step-text">LBS 匿名匹配</div></div>
-  <div class="flow-arrow">→</div>
-  <div class="flow-step"><div class="step-num">STEP 4</div><div class="step-text">拼单成功免邮</div></div>
-</div>
+<!-- How it works -->
+<section>
+  <div class="sec-title">产品流程</div>
+  <div class="flow-visual">
+    <div class="flow-node"><div class="fn-icon">🛒</div><div class="fn-text">用户下单<br>不满59元</div></div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-node"><div class="fn-icon">🧠</div><div class="fn-text">AI自动<br>判定分流</div></div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-node"><div class="fn-icon">📍</div><div class="fn-text">LBS匹配<br>匿名邻居</div></div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-node"><div class="fn-icon">📦</div><div class="fn-text">拼单成功<br>免运费</div></div>
+  </div>
+</section>
 
-<!-- Core advantages -->
-<div class="section-title">核心优势</div>
-<div class="adv-grid">
-  <div class="adv-card">
-    <div class="num">01</div>
-    <div class="adv-title">全匿名 · 零社交</div>
-    <div class="adv-desc">全程不暴露身份，邻居之间互不可见。不建群、不加微信、不打招呼。72.6%青年有拼单需求，68%抵触人情社交 —— JOY拼拼就是为这68%的人设计的。</div>
+<!-- Competitor -->
+<section>
+  <div class="sec-title">竞品对比</div>
+  <div class="compare">
+    <table>
+      <tr>
+        <th>维度</th><th class="hl">京默拼单</th><th>美团拼好饭</th><th>微信群拼单</th><th>手动囤货</th>
+      </tr>
+      <tr><td>社交门槛</td><td class="win">零社交 · 全匿名</td><td>可见陌生人</td><td class="lose">强社交 · 熟人</td><td>无</td></tr>
+      <tr><td>品类覆盖</td><td class="win">全品类自由混拼</td><td>仅餐饮</td><td>看运气</td><td>同款囤货</td></tr>
+      <tr><td>操作方式</td><td class="win">AI全自动匹配</td><td>手动选单品</td><td>手动邀约</td><td>手动计算</td></tr>
+      <tr><td>免运费</td><td class="win">√ 凑满59元免</td><td class="win">√ 免配送</td><td>分摊</td><td class="lose">凑满599元</td></tr>
+      <tr><td>成团速度</td><td class="win">AI秒级匹配</td><td>取决于附近</td><td>取决于人缘</td><td>取决于耐心</td></tr>
+    </table>
   </div>
-  <div class="adv-card">
-    <div class="num">02</div>
-    <div class="adv-title">跨品类自由混拼</div>
-    <div class="adv-desc">你买纸巾，他买零食，她买文具。品类不限，AI自动计算凑单最优组合。区别于美团拼好饭"只能拼同款奶茶"的局限。</div>
-  </div>
-  <div class="adv-card">
-    <div class="num">03</div>
-    <div class="adv-title">AI四层智能分流</div>
-    <div class="adv-desc">百亿补贴直免 / 满59元直免 / 不满59元自动拼单 / 手动关闭开关收费。十条独立逻辑链路，互不干扰，用户无感知。</div>
-  </div>
-  <div class="adv-card">
-    <div class="num">04</div>
-    <div class="adv-title">10分钟极速成团</div>
-    <div class="adv-desc">默认10分钟匹配窗口，早晚高峰压缩至8分钟。超时自动单人下单，用户零等待焦虑。AI优先匹配同楼同小区，成团率预估75%+。</div>
-  </div>
-</div>
-
-<!-- Competitor comparison -->
-<div class="section-title">竞品对比</div>
-<table class="compare-table">
-  <tr>
-    <th>维度</th><th style="background:#e4393c">JOY拼拼</th><th>美团拼好饭</th><th>微信群拼单</th><th>手动囤货凑单</th>
-  </tr>
-  <tr>
-    <td>社交门槛</td><td class="yes">零社交·匿名</td><td>可见陌生人</td><td class="no">强社交·熟人</td><td>无</td>
-  </tr>
-  <tr>
-    <td>品类覆盖</td><td class="yes">全品类混拼</td><td>仅餐饮</td><td>看运气</td><td>仅同款囤货</td>
-  </tr>
-  <tr>
-    <td>操作门槛</td><td class="yes">全自动匹配</td><td>手动选单品</td><td>手动邀约</td><td>手动计算</td>
-  </tr>
-  <tr>
-    <td>免运费</td><td class="yes">√ 凑满59免</td><td class="yes">√ 免配送</td><td>分摊</td><td>√ 凑满599免</td>
-  </tr>
-  <tr>
-    <td>匹配速度</td><td class="yes">AI秒级匹配</td><td>取决于附近</td><td>取决于人缘</td><td>取决于耐心</td>
-  </tr>
-</table>
+</section>
 
 <!-- Value -->
-<div class="section-title">价值贡献</div>
-<div class="adv-grid">
-  <div class="adv-card">
-    <div class="num">200万+</div>
-    <div class="adv-title">年覆盖用户</div>
-    <div class="adv-desc">预期30%不满59元订单转化为拼单免邮</div>
+<section>
+  <div class="sec-title">预期价值</div>
+  <div class="num-row">
+    <div class="num-block"><div class="big count-up" data-target="30" data-suffix="%+">30%+</div><div class="label">弃购订单转化率</div></div>
+    <div class="num-block"><div class="big count-up" data-target="6250" data-suffix="万">6250万</div><div class="label">年节省运费</div></div>
+    <div class="num-block"><div class="big">3→4元</div><div class="label">单件履约成本</div></div>
+    <div class="num-block"><div class="big count-up" data-target="75" data-suffix="%+">75%+</div><div class="label">预期成团率</div></div>
   </div>
-  <div class="adv-card">
-    <div class="num">30%+</div>
-    <div class="adv-title">履约成本降幅</div>
-    <div class="adv-desc">合并零散小件，单件履约成本4.5→3元</div>
-  </div>
-  <div class="adv-card">
-    <div class="num">15%+</div>
-    <div class="adv-title">类目GMV提升</div>
-    <div class="adv-desc">小件高频复购带动品类及跨品类增长</div>
-  </div>
-  <div class="adv-card">
-    <div class="num">50万/年</div>
-    <div class="adv-title">B端运费节省</div>
-    <div class="adv-desc">京东2万+行政采购场景年省估算</div>
-  </div>
-</div>
+</section>
 
-</div>
+<!-- Roadmap -->
+<section>
+  <div class="sec-title">发展规划</div>
+  <div class="timeline">
+    <div class="tl-item">
+      <div class="tl-phase">7.17 预赛</div>
+      <div class="tl-content"><div class="tl-head">Demo 验证</div><div class="tl-desc">Mock数据跑通拼单匹配核心链路，AI引擎<100行Python。亦庄总部现场演示。</div></div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-phase">8.19 复赛</div>
+      <div class="tl-content"><div class="tl-head">MVP 上线</div><div class="tl-desc">接入京东外卖/自营真实接口，真SKU真用户，全流程闭环。</div></div>
+    </div>
+    <div class="tl-item">
+      <div class="tl-phase">9.09 决赛</div>
+      <div class="tl-content"><div class="tl-head">完整版</div><div class="tl-desc">全品类覆盖 · AI匹配优化 · 风控系统完善 · 目标：京东全员 → 全量用户。</div></div>
+    </div>
+  </div>
+</section>
+
+<div class="footer">京默拼单 · AI正规军 · 2026</div>
 
 <script>
-// Cart data
-const scenarios = {
-  snack: {
-    items: [
-      {name:'乐事薯片 原味 75g', detail:'京东自营 · 无PLUS · 无百补', price:8.90},
-      {name:'百事可乐 330ml×6罐', detail:'京东自营 · 无PLUS · 无百补', price:12.80},
-      {name:'良品铺子 坚果零食包', detail:'京东自营 · 无PLUS · 无百补', price:11.10},
-    ],
-    total: 32.80
-  },
-  office: {
-    items: [
-      {name:'得力A4打印纸 500张', detail:'京东自营 · 无PLUS · 无百补', price:10.50},
-      {name:'晨光按动中性笔 5支装', detail:'京东自营 · 无PLUS · 无百补', price:8.00},
-    ],
-    total: 18.50
-  },
-  daily: {
-    items: [
-      {name:'维达抽纸 3层×6包', detail:'京东自营 · 无PLUS · 无百补', price:19.90},
-      {name:'蓝月亮洗手液 500ml', detail:'京东自营 · 无PLUS · 无百补', price:15.90},
-      {name:'舒适达牙膏 120g', detail:'京东自营 · 无PLUS · 无百补', price:9.20},
-    ],
-    total: 45.00
-  }
-};
-
-let current = 'snack';
-
-function switchScenario(key) {
-  current = key;
-  document.querySelectorAll('.scenario-tabs button').forEach(b => b.classList.remove('active'));
-  document.querySelector(`[onclick="switchScenario('${key}')"]`).classList.add('active');
-  renderCart();
-}
-
-function renderCart() {
-  const s = scenarios[current];
-  const area = document.getElementById('cart-area');
-  area.innerHTML = '<div class="cart-list">' + s.items.map(item =>
-    `<div class="cart-item">
-      <div class="info"><span class="name">${item.name}</span><span class="detail">${item.detail}</span></div>
-      <div class="price">¥${item.price.toFixed(2)}</div>
-    </div>`
-  ).join('') + '</div>';
-  document.getElementById('total-price').textContent = `¥${s.total.toFixed(2)}`;
-  const gap = Math.max(0, 59 - s.total);
-  if (gap > 0) {
-    document.getElementById('gap').innerHTML = `还差 ¥${gap.toFixed(2)} 免运费 · 运费 ¥6.00`;
-    document.getElementById('checkout-btn').disabled = false;
-    document.getElementById('checkout-btn').textContent = '匿名静默拼单 · 免运费';
-  } else {
-    document.getElementById('gap').innerHTML = '已满59元 · 直接免运费';
-    document.getElementById('checkout-btn').disabled = true;
-    document.getElementById('checkout-btn').textContent = '已满59元 · 直接免运费';
+// Watermark
+const wm = document.getElementById('watermark');
+const text = 'AI正规军-京默拼单';
+const cols = 6, rows = 8;
+for (let r = 0; r < rows; r++) {
+  for (let c = 0; c < cols; c++) {
+    const s = document.createElement('span');
+    s.textContent = text;
+    s.style.left = (c * 18) + '%';
+    s.style.top = (r * 15) + '%';
+    s.style.transform = 'rotate(-25deg)';
+    wm.appendChild(s);
   }
 }
 
-// Simulated neighbors
-const neighborNames = ['同小区·3栋邻居', '同小区·1栋邻居', '隔壁小区邻居', '同商圈·写字楼用户', '同商圈·奶茶党'];
-const neighborItems = ['买了零食 ¥15', '买了文具 ¥22', '买了纸巾 ¥12', '买了饮料 ¥10', '买了洗护 ¥28'];
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
 
-function startMatching() {
-  const s = scenarios[current];
-  const gap = Math.max(0, 59 - s.total);
-  if (gap <= 0) return;
+      // Count-up numbers
+      entry.target.querySelectorAll('.count-up').forEach(el => {
+        const target = parseFloat(el.getAttribute('data-target'));
+        const suffix = el.getAttribute('data-suffix') || '';
+        const prefix = el.getAttribute('data-prefix') || '';
+        const isInt = !el.getAttribute('data-target').includes('.');
+        const duration = 1500;
+        const start = performance.now();
 
-  const overlay = document.getElementById('overlay');
-  const content = document.getElementById('match-content');
-  overlay.classList.add('show');
-
-  // Phase 1: Matching
-  let timer = 6 + Math.floor(Math.random() * 4); // 6-9 seconds
-  content.innerHTML = `
-    <div class="spinner"></div>
-    <div class="status">正在匹配邻里订单</div>
-    <div class="timer" id="timer">${timer}s</div>
-    <div class="detail-text">搜索范围：同小区/同商圈 1km内<br>正在寻找需要凑单的邻居...</div>
-    <div class="neighbors" id="neighbor-list"></div>
-  `;
-
-  let matched = 0;
-  const totalNeeded = Math.ceil(gap / 10);
-  const neighborInterval = setInterval(() => {
-    if (matched < totalNeeded && matched < neighborNames.length) {
-      const list = document.getElementById('neighbor-list');
-      const n = document.createElement('div');
-      n.className = 'neighbor';
-      n.textContent = neighborNames[matched] + ' ' + neighborItems[matched];
-      list.appendChild(n);
-      matched++;
+        function update(now) {
+          const progress = Math.min((now - start) / duration, 1);
+          const eased = 1 - Math.pow(1 - progress, 3);
+          const current = target * eased;
+          el.textContent = prefix + (isInt ? Math.floor(current).toLocaleString() : current.toFixed(1)) + suffix;
+          if (progress < 1) requestAnimationFrame(update);
+        }
+        requestAnimationFrame(update);
+      });
     }
-  }, 800);
+  });
+}, { threshold: 0.2 });
 
-  const countdown = setInterval(() => {
-    timer--;
-    const tEl = document.getElementById('timer');
-    if (tEl) tEl.textContent = timer + 's';
-    if (timer <= 0) {
-      clearInterval(countdown);
-      clearInterval(neighborInterval);
-      // Phase 2: Success
-      const saved = (Math.random() * 2 + 4).toFixed(1);
-      content.innerHTML = `
-        <div style="font-size:3em">🎉</div>
-        <div class="success">拼单成功！</div>
-        <div class="saved">已为您匹配 ${matched+1} 位邻居<br>跨品类合并订单，已满 ¥${(s.total + gap + Math.random()*5).toFixed(1)}</div>
-        <div style="font-size:1.2em;font-weight:900;color:#e4393c;margin-top:12px">为您节省运费 ¥6.00</div>
-        <div class="detail-text" style="margin-top:8px">全程匿名 · 邻居信息不可见 · 各自独立收货</div>
-        <button onclick="document.getElementById('overlay').classList.remove('show')" style="margin-top:20px;padding:12px 32px;background:#e4393c;color:#fff;border:none;border-radius:8px;font-size:.95em;cursor:pointer;font-family:inherit">知道了</button>
-      `;
-    }
-  }, 1000);
-}
-
-renderCart();
+document.querySelectorAll('section, .stat-card, .num-block, .flow-node, .tl-item').forEach(el => {
+  el.classList.add('anim');
+  observer.observe(el);
+});
 </script>
+
 </body>
 </html>
