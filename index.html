@@ -1,14 +1,13 @@
 <!DOCTYPE html>
-<!-- v2.1 -->
 <html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>熊锋 - 个人简历</title>
+<title>Xiong Feng - Resume / 이력서 / 简历</title>
 <style>
   * {margin:0;padding:0;box-sizing:border-box;}
   body {
-    font-family: -apple-system,'Microsoft YaHei',sans-serif;
+    font-family: -apple-system,'Microsoft YaHei','Malgun Gothic',sans-serif;
     background:#eee;color:#1a1a1a;overflow-x:hidden;
   }
   canvas {position:fixed;top:0;left:0;z-index:1;pointer-events:none;}
@@ -64,6 +63,22 @@
 
   .footer {text-align:center;padding:40px;color:#bbb;font-size:.78em;position:relative;z-index:10;}
 
+  /* Language toggle */
+  .lang-switch {
+    position:fixed;top:16px;right:24px;z-index:1000;
+    display:flex;gap:0;background:rgba(255,255,255,.95);
+    border:1px solid rgba(0,0,0,.18);border-radius:20px;overflow:hidden;
+    box-shadow:0 2px 12px rgba(0,0,0,.12);
+  }
+  .lang-switch a {
+    text-decoration:none;font-size:.78em;font-weight:600;
+    padding:8px 16px;color:#999;transition:all .2s;cursor:pointer;
+    border-right:1px solid #eee;
+  }
+  .lang-switch a:last-child {border-right:none;}
+  .lang-switch a:hover {color:#555;background:#f8f8f8;}
+  .lang-switch a.on {color:#111;background:#eee;}
+
   /* Left nav */
   .nav {
     position:fixed;left:28px;top:50%;transform:translateY(-50%);
@@ -86,6 +101,8 @@
   @media (max-width:900px) {
     .nav {left:12px;gap:14px;}
     .nav a span {display:none;}
+    .lang-switch {top:10px;right:12px;}
+    .lang-switch a {padding:6px 12px;font-size:.72em;}
   }
   @media (max-width:600px) {
     .card {padding:28px 20px;}
@@ -95,21 +112,33 @@
 </style>
 </head>
 <body>
+
+<!-- Language Switch -->
+<div class="lang-switch" id="langSwitch">
+  <a data-lang="zh" class="on" onclick="switchLang('zh')">中</a>
+  <a data-lang="ko" onclick="switchLang('ko')">한</a>
+  <a data-lang="en" onclick="switchLang('en')">EN</a>
+</div>
+
+<!-- Left Nav -->
 <div class="nav">
-  <a href="#hero"><span class="dot"></span><span>首页</span></a>
-  <a href="#work"><span class="dot"></span><span>工作经历</span></a>
-  <a href="#skills"><span class="dot"></span><span>核心优势</span></a>
-  <a href="#eval"><span class="dot"></span><span>自我评价</span></a>
+  <a href="#hero"><span class="dot"></span><span data-t="nav-home">首页</span></a>
+  <a href="#work"><span class="dot"></span><span data-t="nav-work">工作经历</span></a>
+  <a href="#skills"><span class="dot"></span><span data-t="nav-skills">核心优势</span></a>
+  <a href="#eval"><span class="dot"></span><span data-t="nav-eval">自我评价</span></a>
 </div>
 
 <div class="content">
 
 <div class="section" id="hero">
   <div class="card hero">
-    <h1>熊 锋</h1>
-    <div class="sub">TOB 商务经理 · AI 提效实战者</div>
+    <h1 data-t="hero-name">熊 锋</h1>
+    <div class="sub" data-t="hero-sub">TOB 商务经理 · AI 提效实战者</div>
     <div class="tags">
-      <span>京东政企事业部</span><span>韩语 Topik5</span><span>AI 开发</span><span>成都双流</span>
+      <span data-t="tag-jd">京东政企事业部</span>
+      <span data-t="tag-korean">韩语 Topik5</span>
+      <span data-t="tag-ai">AI 开发</span>
+      <span data-t="tag-city">成都双流</span>
     </div>
     <div class="contact">
       <span>2118668735@qq.com</span><span>13558727604</span>
@@ -119,29 +148,29 @@
 
 <div class="section" id="work">
   <div class="card">
-    <div class="title">工作经历</div>
+    <div class="title" data-t="title-work">工作经历</div>
     <div class="jobs">
       <div class="job">
-        <h3>京东集团 · 政企事业部 商务经理岗（催收/对账）</h3>
-        <div class="date">2023.11 — 至今</div>
-        <p>负责部队客户 TOB 商务后端：开票、催收、对账、回款。虽聚焦后端，对前端引流、电销、商机挖掘等完整链路均有了解。</p>
+        <h3 data-t="job1-title">京东集团 · 政企事业部 商务经理岗（催收/对账）</h3>
+        <div class="date">2023.11 — <span data-t="job1-date-now">至今</span></div>
+        <p data-t="job1-desc">负责部队客户 TOB 商务后端：开票、催收、对账、回款。虽聚焦后端，对前端引流、电销、商机挖掘等完整链路均有了解。</p>
         <div class="results">
-          · 南部某部队项目2年8个月，GMV同比 <span>+15%</span>，逾期率 <span>25%→18%</span>，坏账追回时效缩短 <span>13%</span>，均创历史最优<br>
-          · 封闭平台、高合规场景下近3年0投诉，年处理案件 <span>200+</span><br>
-          · 2025年12月至今，带教<span>3人</span>，团队效率 <span>+30%</span>，年支援20+次<br>
-          · 主动总结、归纳，输出《商务经理岗带教SOP+知识库》<br>
-          · 自主开发 v16 商务数据处理工具（Python+customtkinter），<span>50+</span>用户，<span>50min→1min</span>（效率+98%），被邀请在集团做AI分享演讲
+          <span data-t="job1-r1">· 南部某部队项目2年8个月，GMV同比 +15%，逾期率 25%→18%，坏账追回时效缩短 13%，均创历史最优</span><br>
+          <span data-t="job1-r2">· 封闭平台、高合规场景下近3年0投诉，年处理案件 200+</span><br>
+          <span data-t="job1-r3">· 2025年12月至今，带教3人，团队效率 +30%，年支援20+次</span><br>
+          <span data-t="job1-r4">· 主动总结、归纳，输出《商务经理岗带教SOP+知识库》</span><br>
+          <span data-t="job1-r5">· 自主开发 v16 商务数据处理工具（Python+customtkinter），50+用户，50min→1min（效率+98%），被邀请在集团做AI分享演讲</span>
         </div>
       </div>
       <div class="job">
-        <h3>某机械设备公司 · 设备工程师（韩语方向）</h3>
+        <h3 data-t="job2-title">某机械设备公司 · 设备工程师（韩语方向）</h3>
         <div class="date">2020.03 — 2023.04</div>
-        <p>眉山5000头养殖场项目：独立负责勘测、方案、电路、预算、人员调度，协调韩方工程师按时交付并驻场培训运维。</p>
+        <p data-t="job2-desc">眉山5000头养殖场项目：独立负责勘测、方案、电路、预算、人员调度，协调韩方工程师按时交付并驻场培训运维。</p>
       </div>
       <div class="job">
-        <h3>某半导体公司 · 韩语翻译</h3>
+        <h3 data-t="job3-title">某半导体公司 · 韩语翻译</h3>
         <div class="date">2019.06 — 2020.02</div>
-        <p>负责8.0T/8.5T半导体刻蚀与切割工序翻译；支援晶圆抓取、清洗、研磨、IT防火墙搭建等多个工序。</p>
+        <p data-t="job3-desc">负责8.0T/8.5T半导体刻蚀与切割工序翻译；支援晶圆抓取、清洗、研磨、IT防火墙搭建等多个工序。</p>
       </div>
     </div>
   </div>
@@ -149,151 +178,220 @@
 
 <div class="section" id="skills">
   <div class="card">
-    <div class="title">核心优势 & 专业技能</div>
+    <div class="title" data-t="title-skills">核心优势 & 专业技能</div>
     <div class="skill-grid">
-      <div class="skill-item"><div class="label">TOB 全链路</div><div class="val">近3年京东商务一线，熟悉引流→电销→商机→运营→下单→开票→回款闭环，精通后端对账催收，对前端亦有完整理解。</div></div>
-      <div class="skill-item"><div class="label">AI + 业务提效</div><div class="val">非技术岗中罕见的 AI 实战能力——DeepSeek / OpenCode / Grok 独立开发桌面应用；Python + pandas + openpyxl + customtkinter；Ollama 本地部署、Docker、内网穿透。v16 覆盖 50+ 同事（50min→1min），"JOY拼拼"带队参加黑马大赛。</div></div>
-      <div class="skill-item"><div class="label">客户导向</div><div class="val">部队客户高合规场景下近3年0投诉，逾期率 <b>25%→18%</b>，擅长复杂规则下维护客户关系并推进回款。</div></div>
-      <div class="skill-item"><div class="label">其他能力</div><div class="val">韩语 Topik5（商务沟通级）、英语基础沟通能力；10年驾驶经验（20万km）；视频剪辑；电焊 / 氩弧焊；跨行业快速适应（半导体→机械→互联网）</div></div>
+      <div class="skill-item"><div class="label" data-t="skill1-label">TOB 全链路</div><div class="val" data-t="skill1-val">近3年京东商务一线，熟悉引流→电销→商机→运营→下单→开票→回款闭环，精通后端对账催收，对前端亦有完整理解。</div></div>
+      <div class="skill-item"><div class="label" data-t="skill2-label">AI + 业务提效</div><div class="val" data-t="skill2-val">非技术岗中罕见的 AI 实战能力——DeepSeek / OpenCode / Grok 独立开发桌面应用；Python + pandas + openpyxl + customtkinter；Ollama 本地部署、Docker、内网穿透。v16 覆盖 50+ 同事（50min→1min），"JOY拼拼"带队参加黑马大赛。</div></div>
+      <div class="skill-item"><div class="label" data-t="skill3-label">客户导向</div><div class="val" data-t="skill3-val">部队客户高合规场景下近3年0投诉，逾期率 25%→18%，擅长复杂规则下维护客户关系并推进回款。</div></div>
+      <div class="skill-item"><div class="label" data-t="skill4-label">其他能力</div><div class="val" data-t="skill4-val">韩语 Topik5（商务沟通级）、英语基础沟通能力；10年驾驶经验（20万km）；视频剪辑；电焊 / 氩弧焊；跨行业快速适应（半导体→机械→互联网）</div></div>
     </div>
   </div>
 </div>
 
 <div class="section" id="eval">
   <div class="card">
-    <div class="title">自我评价</div>
+    <div class="title" data-t="title-eval">自我评价</div>
     <div class="eval-list">
-      <div class="eval-item">近3年京东 TOB 商务一线，从后端对账切入，对前端引流、电销、商机挖掘同样熟悉，有完整业务链条视角。</div>
-      <div class="eval-item"><b>非技术岗中少有的 AI 实战能力</b>——不等公司给系统，自己发现痛点自己动手解决，已落地2个产品（v16工具50+用户 + "JOY拼拼"立项参赛），被邀请在集团做AI分享演讲。</div>
-      <div class="eval-item">高合规、高要求的部队客户场景下近3年0投诉，逾期率持续下降，抗压能力和客户信任构建能力稳定。</div>
-      <div class="eval-item">执行力强、逻辑清晰，善于在复杂信息中快速定位关键问题并推动闭环。</div>
-      <div class="eval-item">跨行业适应能力强（半导体翻译→机械工程→京东商务），学习速度快，临场沟通出色。</div>
+      <div class="eval-item" data-t="eval1">近3年京东 TOB 商务一线，从后端对账切入，对前端引流、电销、商机挖掘同样熟悉，有完整业务链条视角。</div>
+      <div class="eval-item" data-t="eval2">非技术岗中少有的 AI 实战能力——不等公司给系统，自己发现痛点自己动手解决，已落地2个产品（v16工具50+用户 + "JOY拼拼"立项参赛），被邀请在集团做AI分享演讲。</div>
+      <div class="eval-item" data-t="eval3">高合规、高要求的部队客户场景下近3年0投诉，逾期率持续下降，抗压能力和客户信任构建能力稳定。</div>
+      <div class="eval-item" data-t="eval4">执行力强、逻辑清晰，善于在复杂信息中快速定位关键问题并推动闭环。</div>
+      <div class="eval-item" data-t="eval5">跨行业适应能力强（半导体翻译→机械工程→京东商务），学习速度快，临场沟通出色。</div>
     </div>
   </div>
 </div>
 
 <div class="section">
   <div class="card" style="text-align:center;">
-    <div style="font-size:1.3em;color:#111;line-height:1.6;">
+    <div style="font-size:1.3em;color:#111;line-height:1.6;" data-t="download">
       更多详细信息，请点击<a href="2026熊锋最新简历.pdf" download style="color:#111;font-weight:700;text-decoration:underline;">下载</a>附件简历
     </div>
   </div>
 </div>
 
-<div class="footer">熊锋 · xiongfeng</div>
+<div class="footer" data-t="footer">熊锋 · xiongfeng</div>
 
 </div>
+
+<script>
+// ===================== LANGUAGE DATA =====================
+const L = {
+  zh: {
+    'nav-home':'首页','nav-work':'工作经历','nav-skills':'核心优势','nav-eval':'自我评价',
+    'hero-name':'熊 锋','hero-sub':'TOB 商务经理 · AI 提效实战者',
+    'tag-jd':'京东政企事业部','tag-korean':'韩语 Topik5','tag-ai':'AI 开发','tag-city':'成都双流',
+    'title-work':'工作经历',
+    'job1-title':'京东集团 · 政企事业部 商务经理岗（催收/对账）',
+    'job1-date-now':'至今',
+    'job1-desc':'负责部队客户 TOB 商务后端：开票、催收、对账、回款。虽聚焦后端，对前端引流、电销、商机挖掘等完整链路均有了解。',
+    'job1-r1':'· 南部某部队项目2年8个月，GMV同比 +15%，逾期率 25%→18%，坏账追回时效缩短 13%，均创历史最优',
+    'job1-r2':'· 封闭平台、高合规场景下近3年0投诉，年处理案件 200+',
+    'job1-r3':'· 2025年12月至今，带教3人，团队效率 +30%，年支援20+次',
+    'job1-r4':'· 主动总结、归纳，输出《商务经理岗带教SOP+知识库》',
+    'job1-r5':'· 自主开发 v16 商务数据处理工具（Python+customtkinter），50+用户，50min→1min（效率+98%），被邀请在集团做AI分享演讲',
+    'job2-title':'某机械设备公司 · 设备工程师（韩语方向）',
+    'job2-desc':'眉山5000头养殖场项目：独立负责勘测、方案、电路、预算、人员调度，协调韩方工程师按时交付并驻场培训运维。',
+    'job3-title':'某半导体公司 · 韩语翻译',
+    'job3-desc':'负责8.0T/8.5T半导体刻蚀与切割工序翻译；支援晶圆抓取、清洗、研磨、IT防火墙搭建等多个工序。',
+    'title-skills':'核心优势 & 专业技能',
+    'skill1-label':'TOB 全链路',
+    'skill1-val':'近3年京东商务一线，熟悉引流→电销→商机→运营→下单→开票→回款闭环，精通后端对账催收，对前端亦有完整理解。',
+    'skill2-label':'AI + 业务提效',
+    'skill2-val':'非技术岗中罕见的 AI 实战能力——DeepSeek / OpenCode / Grok 独立开发桌面应用；Python + pandas + openpyxl + customtkinter；Ollama 本地部署、Docker、内网穿透。v16 覆盖 50+ 同事（50min→1min），"JOY拼拼"带队参加黑马大赛。',
+    'skill3-label':'客户导向',
+    'skill3-val':'部队客户高合规场景下近3年0投诉，逾期率 25%→18%，擅长复杂规则下维护客户关系并推进回款。',
+    'skill4-label':'其他能力',
+    'skill4-val':'韩语 Topik5（商务沟通级）、英语基础沟通能力；10年驾驶经验（20万km）；视频剪辑；电焊 / 氩弧焊；跨行业快速适应（半导体→机械→互联网）',
+    'title-eval':'自我评价',
+    'eval1':'近3年京东 TOB 商务一线，从后端对账切入，对前端引流、电销、商机挖掘同样熟悉，有完整业务链条视角。',
+    'eval2':'非技术岗中少有的 AI 实战能力——不等公司给系统，自己发现痛点自己动手解决，已落地2个产品（v16工具50+用户 + "JOY拼拼"立项参赛），被邀请在集团做AI分享演讲。',
+    'eval3':'高合规、高要求的部队客户场景下近3年0投诉，逾期率持续下降，抗压能力和客户信任构建能力稳定。',
+    'eval4':'执行力强、逻辑清晰，善于在复杂信息中快速定位关键问题并推动闭环。',
+    'eval5':'跨行业适应能力强（半导体翻译→机械工程→京东商务），学习速度快，临场沟通出色。',
+    'download':'更多详细信息，请点击<a href="2026熊锋最新简历.pdf" download style="color:#111;font-weight:700;text-decoration:underline;">下载</a>附件简历',
+    'footer':'熊锋 · xiongfeng'
+  },
+  ko: {
+    'nav-home':'홈','nav-work':'경력','nav-skills':'핵심 역량','nav-eval':'자기 평가',
+    'hero-name':'숑 펑','hero-sub':'B2B 비즈니스 매니저 · AI 실무 전문가',
+    'tag-jd':'JD.com 정부기업사업부','tag-korean':'한국어 Topik5','tag-ai':'AI 개발','tag-city':'청두 솽류',
+    'title-work':'경력 사항',
+    'job1-title':'JD.com · 정부기업사업부 비즈니스 매니저（채권추심/대사）',
+    'job1-date-now':'현재',
+    'job1-desc':'군부대 고객 B2B 비즈니스 백엔드: 인보이스 발행, 채권 추심, 대사, 회수 담당. 백엔드에 집중하면서도 프론트엔드 리드 생성, 텔레마케팅, 비즈니스 기회 발굴 등 전체 체인을 이해하고 있음.',
+    'job1-r1':'· 남부 모 부대 프로젝트 2년 8개월, GMV 전년比 +15%, 연체율 25%→18%, 부실채권 회수 기간 13% 단축, 모두 역대 최고 기록',
+    'job1-r2':'· 폐쇄 플랫폼, 높은 컴플라이언스 환경에서 3년간 민원 제로, 연간 200+ 건 처리',
+    'job1-r3':'· 2025년 12월부터 3명 교육, 팀 효율 +30%, 연간 20+회 타 부서 지원',
+    'job1-r4':'· 자발적 업무 정리 및 지식 체계화로 《비즈니스 매니저 교육 SOP+지식 베이스》 작성',
+    'job1-r5':'· v16 비즈니스 데이터 처리 도구 자체 개발（Python+customtkinter）, 50+ 사용자, 50분→1분（효율 +98%）, 그룹 AI 세미나 발표 초청',
+    'job2-title':'모 기계설비 회사 · 설비 엔지니어（한국어）',
+    'job2-desc':'메이산 5000두 양식장 프로젝트: 측량, 설계, 전기, 예산, 인력 배치 단독 책임. 한국 엔지니어와 협업하여 기한 내 납품 및 현장 교육 수행.',
+    'job3-title':'모 반도체 회사 · 한국어 통번역',
+    'job3-desc':'8.0T/8.5T 반도체 식각 및 절단 공정 통번역; 웨이퍼 픽업, 세정, 연마, IT 방화벽 구축 등 다수 공정 지원.',
+    'title-skills':'핵심 역량 & 전문 기술',
+    'skill1-label':'B2B 풀 체인',
+    'skill1-val':'3년 가까운 JD.com 비즈니스 현장 경험. 리드 생성→텔레마케팅→비즈니스 기회→운영→발주→인보이스→회수 클로즈드 루프에 능숙하며, 백엔드 대사 및 추심에 정통하고 프론트엔드 업무도 완벽히 이해.',
+    'skill2-label':'AI + 비즈니스 효율화',
+    'skill2-val':'비기술 직군에서 보기 드문 AI 실무 역량 — DeepSeek/OpenCode/Grok으로 데스크톱 앱 독자 개발; Python+pandas+openpyxl+customtkinter; Ollama 로컬 배포, Docker, 내부망穿透. v16은 50+ 동료가 사용（50분→1분）, "JOY拼拼" 팀장으로 해커톤 대회 참가.',
+    'skill3-label':'고객 지향',
+    'skill3-val':'군부대 고객의 높은 컴플라이언스 환경에서 3년간 민원 제로, 연체율 25%→18%. 복잡한 규정 내에서 고객 관계 유지 및 회수 촉진에 탁월.',
+    'skill4-label':'기타 역량',
+    'skill4-val':'한국어 Topik5（비즈니스 회화급）, 영어 기초 커뮤니케이션; 10년 운전 경력（20만km）; 영상 편집; 전기용접/아르곤 용접; 산업 간 빠른 적응（반도체→기계→인터넷）',
+    'title-eval':'자기 평가',
+    'eval1':'3년 가까운 JD.com B2B 비즈니스 현장에서 백엔드 대사로 시작해, 프론트엔드 리드 생성·텔레마케팅·비즈니스 기회 발굴에도 익숙하며 완전한 비즈니스 체인 시야를 보유.',
+    'eval2':'비기술 직군에서 보기 드문 AI 실무 능력 — 회사 시스템을 기다리지 않고 스스로 문제를 발견하고 해결. 2개 제품 출시（v16 도구 50+ 사용자 + "JOY拼拼" 프로젝트 입상 및 대회 출전）, 그룹 AI 세미나 발표 초청.',
+    'eval3':'높은 컴플라이언스와 까다로운 군부대 고객 현장에서 3년간 민원 제로, 연체율 지속 감소. 스트레스 내성과 고객 신뢰 구축 능력이 안정적.',
+    'eval4':'실행력과 논리적 사고가 뛰어나며, 복잡한 정보 속에서 핵심 문제를 빠르게 식별하고 클로저를 추진.',
+    'eval5':'산업 간 적응력 우수（반도체 통역→기계 엔지니어링→JD.com 비즈니스）, 학습 속도가 빠르고 즉흥 커뮤니케이션이 뛰어남.',
+    'download':'자세한 내용은 <a href="2026熊锋最新简历.pdf" download style="color:#111;font-weight:700;text-decoration:underline;">이력서 PDF</a>를 다운로드해 주세요',
+    'footer':'숑 펑 · xiongfeng'
+  },
+  en: {
+    'nav-home':'Home','nav-work':'Experience','nav-skills':'Strengths','nav-eval':'About',
+    'hero-name':'Xiong Feng','hero-sub':'B2B Business Manager · AI Practitioner',
+    'tag-jd':'JD.com Government & Enterprise','tag-korean':'Korean Topik5','tag-ai':'AI Development','tag-city':'Chengdu, China',
+    'title-work':'Work Experience',
+    'job1-title':'JD.com · Government & Enterprise BU — Business Manager（Collections / Reconciliation）',
+    'job1-date-now':'Present',
+    'job1-desc':'Responsible for military client B2B backend operations: invoicing, collections, reconciliation, and payment recovery. While focused on backend, I have a solid understanding of the full chain including front-end lead generation, telesales, and opportunity discovery.',
+    'job1-r1':'· Southern military project: 2 yrs 8 mos. GMV +15% YoY, overdue rate 25%→18%, bad debt recovery time reduced 13% — all historic bests',
+    'job1-r2':'· Zero complaints over ~3 years in a closed-platform, high-compliance environment. 200+ cases handled annually',
+    'job1-r3':'· Since Dec 2025: mentored 3 team members, team efficiency +30%, cross-department support 20+ times/yr',
+    'job1-r4':'· Authored the Business Manager Onboarding SOP & Knowledge Base through proactive documentation',
+    'job1-r5':'· Independently built v16 Business Data Processing Tool（Python + customtkinter）, 50+ users, 50min→1min（+98% efficiency）. Invited to present at the Group AI Forum',
+    'job2-title':'Heavy Equipment Company · Equipment Engineer（Korean-speaking）',
+    'job2-desc':'Meishan 5,000-head livestock farm project: independently led site survey, solution design, electrical planning, budgeting, and crew scheduling. Coordinated with Korean engineers for on-time delivery and on-site training.',
+    'job3-title':'Semiconductor Company · Korean Interpreter',
+    'job3-desc':'Interpreted for 8.0T/8.5T semiconductor etching & dicing processes. Supported wafer handling, cleaning, grinding, IT firewall setup, and other production stages.',
+    'title-skills':'Core Strengths & Professional Skills',
+    'skill1-label':'B2B Full Chain',
+    'skill1-val':'~3 years on the frontline of JD.com B2B business. Proficient in the closed loop: lead gen→telesales→opportunity→operations→ordering→invoicing→recovery. Deep expertise in backend reconciliation and collections, with a comprehensive understanding of front-end operations.',
+    'skill2-label':'AI + Business Efficiency',
+    'skill2-val':'Rare AI hands-on capability for a non-tech role — independently built desktop apps using DeepSeek / OpenCode / Grok. Skilled in Python + pandas + openpyxl + customtkinter. Experience with Ollama local deployment, Docker, and intranet tunneling. v16 tool adopted by 50+ colleagues（50min→1min）. Leading "JOY拼拼" team in the Hackathon competition.',
+    'skill3-label':'Client-First Mindset',
+    'skill3-val':'Zero complaints in a high-compliance military-client setting for ~3 years. Reduced overdue rate from 25% to 18%. Adept at maintaining strong client relationships and driving recovery under complex regulatory conditions.',
+    'skill4-label':'Additional Strengths',
+    'skill4-val':'Korean Topik5（business fluent）, Basic English communication. 10 years driving（200,000 km）. Video editing. Electric welding / TIG welding. Rapid cross-industry adaptation（Semiconductor→Manufacturing→Tech）',
+    'title-eval':'Self-Assessment',
+    'eval1':'~3 years on the JD.com B2B frontline, starting from backend reconciliation and expanding into lead generation, telesales, and opportunity discovery — possessing a complete business-chain perspective.',
+    'eval2':'Rare AI implementation capability in a non-tech role — I don\'t wait for the company to provide tools; I identify pain points and solve them myself. Two products shipped（v16 tool 50+ users + "JOY拼拼" project launched & competing）, invited to present at the Group AI Forum.',
+    'eval3':'Zero complaints over ~3 years in a high-compliance, high-demand military client setting. Consistently reducing overdue rates. Proven resilience and client trust-building ability.',
+    'eval4':'Strong execution, clear logic. Skilled at quickly identifying key issues in complex information and driving toward closure.',
+    'eval5':'Excellent cross-industry adaptability（Semiconductor interpreting→Mechanical engineering→JD.com business）. Fast learner with outstanding on-the-spot communication.',
+    'download':'For more details, <a href="2026熊锋最新简历.pdf" download style="color:#111;font-weight:700;text-decoration:underline;">download</a> my resume (PDF)',
+    'footer':'Xiong Feng · xiongfeng'
+  }
+};
+
+let currentLang = 'zh';
+
+function switchLang(lang) {
+  currentLang = lang;
+  document.querySelectorAll('#langSwitch a').forEach(a=>a.classList.remove('on'));
+  document.querySelector('#langSwitch a[data-lang="'+lang+'"]').classList.add('on');
+  document.documentElement.lang = lang==='zh'?'zh-CN':lang==='ko'?'ko':'en';
+
+  const data = L[lang];
+  document.querySelectorAll('[data-t]').forEach(el => {
+    const key = el.getAttribute('data-t');
+    if (data[key]) {
+      // For download link, use innerHTML to preserve the <a> tag
+      if (key === 'download') {
+        el.innerHTML = data[key];
+      } else {
+        el.textContent = data[key];
+      }
+    }
+  });
+
+  // Update nav labels
+  document.querySelectorAll('.nav a span[data-t]').forEach(el => {
+    const key = el.getAttribute('data-t');
+    if (data[key]) el.textContent = data[key];
+  });
+
+  localStorage.setItem('lang', lang);
+}
+
+// Restore saved language
+const saved = localStorage.getItem('lang');
+if (saved && L[saved]) switchLang(saved);
+</script>
 
 <script type="importmap">
 {"imports":{"three":"https://unpkg.com/three@0.160.0/build/three.module.js"}}
 </script>
 <script type="module">
 import * as THREE from 'three';
-
 let mouseX=0,mouseY=0,targetX=0,targetY=0;
 document.addEventListener('mousemove',e=>{targetX=e.clientX;targetY=e.clientY;});
-
-const scene = new THREE.Scene();
-const camera = new THREE.PerspectiveCamera(60,innerWidth/innerHeight,.1,100);
+const scene=new THREE.Scene();
+const camera=new THREE.PerspectiveCamera(60,innerWidth/innerHeight,.1,100);
 camera.position.z=8;
-const renderer = new THREE.WebGLRenderer({antialias:true,alpha:true});
+const renderer=new THREE.WebGLRenderer({antialias:true,alpha:true});
 renderer.setSize(innerWidth,innerHeight);
 renderer.setPixelRatio(Math.min(devicePixelRatio,2));
 document.body.prepend(renderer.domElement);
-
-// Particle field
-const pGeo = new THREE.BufferGeometry();
+const pGeo=new THREE.BufferGeometry();
 const N=2000,pos=new Float32Array(N*3),cols=new Float32Array(N*3);
-for(let i=0;i<N*3;i+=3){
-  pos[i]=(Math.random()-.5)*20;pos[i+1]=(Math.random()-.5)*12;pos[i+2]=-Math.random()*8;
-  const g=0;cols[i]=g;cols[i+1]=g;cols[i+2]=g;
-}
+for(let i=0;i<N*3;i+=3){pos[i]=(Math.random()-.5)*20;pos[i+1]=(Math.random()-.5)*12;pos[i+2]=-Math.random()*8;const g=0;cols[i]=g;cols[i+1]=g;cols[i+2]=g;}
 pGeo.setAttribute('position',new THREE.BufferAttribute(pos,3));
 pGeo.setAttribute('color',new THREE.BufferAttribute(cols,3));
-const pMat = new THREE.PointsMaterial({size:.03,vertexColors:true,transparent:true,opacity:.8});
-const particles = new THREE.Points(pGeo,pMat);
-scene.add(particles);
-
-// Floating wireframe shapes
-const geoGroup = new THREE.Group();
-const shapes = [];
-const geos = [
-  new THREE.IcosahedronGeometry(.25,0),
-  new THREE.OctahedronGeometry(.2,0),
-  new THREE.TetrahedronGeometry(.22,0),
-  new THREE.IcosahedronGeometry(.18,0),
-  new THREE.DodecahedronGeometry(.2,0),
-  new THREE.OctahedronGeometry(.25,0),
-  new THREE.ConeGeometry(.18,.3,6),
-  new THREE.TetrahedronGeometry(.2,0),
-  new THREE.IcosahedronGeometry(.22,0),
-  new THREE.OctahedronGeometry(.18,0),
-];
-for(let i=0;i<10;i++){
-  const mat = new THREE.MeshBasicMaterial({color:new THREE.Color().setHSL(0,0,.1+.03*i),transparent:true,opacity:.08});
-  const wire = new THREE.LineSegments(
-    new THREE.EdgesGeometry(geos[i%geos.length]),
-    new THREE.LineBasicMaterial({color:0x000000,transparent:true,opacity:.4})
-  );
-  const group = new THREE.Group();
-  group.add(new THREE.Mesh(geos[i%geos.length],mat));
-  group.add(wire);
-  group.position.set((Math.random()-.5)*8,(Math.random()-.5)*5,-Math.random()*3-1);
-  group.userData={speed:.3+Math.random()*.5,rotSpeed:.01+Math.random()*.02,amplitude:.6+Math.random()*2,offset:Math.random()*Math.PI*2,basePos:group.position.clone()};
-  shapes.push(group);geoGroup.add(group);
-}
+const pMat=new THREE.PointsMaterial({size:.03,vertexColors:true,transparent:true,opacity:.8});
+const particles=new THREE.Points(pGeo,pMat);scene.add(particles);
+const geoGroup=new THREE.Group();const shapes=[];
+const geos=[new THREE.IcosahedronGeometry(.25,0),new THREE.OctahedronGeometry(.2,0),new THREE.TetrahedronGeometry(.22,0),new THREE.IcosahedronGeometry(.18,0),new THREE.DodecahedronGeometry(.2,0),new THREE.OctahedronGeometry(.25,0),new THREE.ConeGeometry(.18,.3,6),new THREE.TetrahedronGeometry(.2,0),new THREE.IcosahedronGeometry(.22,0),new THREE.OctahedronGeometry(.18,0)];
+for(let i=0;i<10;i++){const mat=new THREE.MeshBasicMaterial({color:new THREE.Color().setHSL(0,0,.1+.03*i),transparent:true,opacity:.08});const wire=new THREE.LineSegments(new THREE.EdgesGeometry(geos[i%geos.length]),new THREE.LineBasicMaterial({color:0x000000,transparent:true,opacity:.4}));const group=new THREE.Group();group.add(new THREE.Mesh(geos[i%geos.length],mat));group.add(wire);group.position.set((Math.random()-.5)*8,(Math.random()-.5)*5,-Math.random()*3-1);group.userData={speed:.3+Math.random()*.5,rotSpeed:.01+Math.random()*.02,amplitude:.6+Math.random()*2,offset:Math.random()*Math.PI*2,basePos:group.position.clone()};shapes.push(group);geoGroup.add(group);}
 scene.add(geoGroup);
-
-// Subtle rings
-const rGeo = new THREE.TorusGeometry(1.6,.01,16,100);
-const ring = new THREE.Mesh(rGeo,new THREE.MeshBasicMaterial({color:0xcccccc,transparent:true,opacity:.08}));
-scene.add(ring);
-const r2Geo = new THREE.TorusGeometry(2.2,.008,8,80);
-const ring2 = new THREE.Mesh(r2Geo,new THREE.MeshBasicMaterial({color:0xaaaaaa,transparent:true,opacity:.05}));
-scene.add(ring2);
-
-let scrollY=0;
-window.addEventListener('scroll',()=>{scrollY=window.scrollY/(document.body.scrollHeight-innerHeight);});
-
-function animate(time){
-  requestAnimationFrame(animate);time*=.001;
-  mouseX+=(targetX-mouseX)*.08;
-  mouseY+=(targetY-mouseY)*.08;
-  const mx=(mouseX/innerWidth)*2-1,my=-(mouseY/innerHeight)*2+1;
-  camera.position.x+=(mx*.4-camera.position.x)*.02;
-  camera.position.y+=(my*.2-camera.position.y)*.02;
-  camera.lookAt(0,scrollY*4-2,0);
-  particles.rotation.y+=.0001;
-  shapes.forEach(s=>{const u=s.userData;s.rotation.x+=u.rotSpeed;s.rotation.y+=u.rotSpeed*.7;const t=time*u.speed+u.offset;s.position.x=u.basePos.x+mx*u.amplitude;s.position.y=u.basePos.y+Math.sin(t)*u.amplitude*.4+my*u.amplitude*.4;s.position.z=u.basePos.z+Math.cos(t)*u.amplitude*.2;});
-  ring.rotation.x+=.002;ring.rotation.y+=.003;ring.position.y=scrollY*8-4;
-  ring2.rotation.x-=.002;ring2.rotation.y-=.002;ring2.position.y=scrollY*8-4;
-  renderer.render(scene,camera);
-}
-animate(0);
-window.addEventListener('resize',()=>{camera.aspect=innerWidth/innerHeight;camera.updateProjectionMatrix();renderer.setSize(innerWidth,innerHeight);});
-
-// Nav scroll-spy + smooth scroll
-const navs = document.querySelectorAll('.nav a');
-const sections = [...navs].map(a=>document.querySelector(a.getAttribute('href')));
-
-function updateNav(){
-  const y = window.scrollY + innerHeight/3;
-  let idx = 0;
-  sections.forEach((s,i)=>{if(s&&s.offsetTop<=y)idx=i;});
-  navs.forEach(a=>a.classList.remove('active'));
-  if(navs[idx])navs[idx].classList.add('active');
-}
-
-navs.forEach(a=>{
-  a.addEventListener('click',e=>{
-    e.preventDefault();
-    const target = document.querySelector(a.getAttribute('href'));
-    if(target)target.scrollIntoView({behavior:'smooth'});
-  });
-});
-
-window.addEventListener('scroll',()=>{updateNav();});
-updateNav();
+const rGeo=new THREE.TorusGeometry(1.6,.01,16,100);const ring=new THREE.Mesh(rGeo,new THREE.MeshBasicMaterial({color:0xcccccc,transparent:true,opacity:.08}));scene.add(ring);
+const r2Geo=new THREE.TorusGeometry(2.2,.008,8,80);const ring2=new THREE.Mesh(r2Geo,new THREE.MeshBasicMaterial({color:0xaaaaaa,transparent:true,opacity:.05}));scene.add(ring2);
+let scrollY=0;window.addEventListener('scroll',()=>{scrollY=window.scrollY/(document.body.scrollHeight-innerHeight);});
+function animate(time){requestAnimationFrame(animate);time*=.001;mouseX+=(targetX-mouseX)*.08;mouseY+=(targetY-mouseY)*.08;const mx=(mouseX/innerWidth)*2-1,my=-(mouseY/innerHeight)*2+1;camera.position.x+=(mx*.4-camera.position.x)*.02;camera.position.y+=(my*.2-camera.position.y)*.02;camera.lookAt(0,scrollY*4-2,0);particles.rotation.y+=.0001;shapes.forEach(s=>{const u=s.userData;s.rotation.x+=u.rotSpeed;s.rotation.y+=u.rotSpeed*.7;const t=time*u.speed+u.offset;s.position.x=u.basePos.x+mx*u.amplitude;s.position.y=u.basePos.y+Math.sin(t)*u.amplitude*.4+my*u.amplitude*.4;s.position.z=u.basePos.z+Math.cos(t)*u.amplitude*.2;});ring.rotation.x+=.002;ring.rotation.y+=.003;ring.position.y=scrollY*8-4;ring2.rotation.x-=.002;ring2.rotation.y-=.002;ring2.position.y=scrollY*8-4;renderer.render(scene,camera);}
+animate(0);window.addEventListener('resize',()=>{camera.aspect=innerWidth/innerHeight;camera.updateProjectionMatrix();renderer.setSize(innerWidth,innerHeight);});
+const navs=document.querySelectorAll('.nav a');const sections=[...navs].map(a=>document.querySelector(a.getAttribute('href')));
+function updateNav(){const y=window.scrollY+innerHeight/3;let idx=0;sections.forEach((s,i)=>{if(s&&s.offsetTop<=y)idx=i;});navs.forEach(a=>a.classList.remove('active'));if(navs[idx])navs[idx].classList.add('active');}
+navs.forEach(a=>{a.addEventListener('click',e=>{e.preventDefault();const target=document.querySelector(a.getAttribute('href'));if(target)target.scrollIntoView({behavior:'smooth'});});});
+window.addEventListener('scroll',()=>{updateNav();});updateNav();
 </script>
 </body>
 </html>
